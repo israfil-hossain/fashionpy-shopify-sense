@@ -1,0 +1,454 @@
+{% style %}
+  .block-{{ block.id }} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+    /* Background */
+    {% if block.settings.button_background_use_gradient and block.settings.button_background_gradient_color != blank %}
+      background: {{ block.settings.button_background_gradient_color }};
+    {% else %}
+      background-color: {{ block.settings.button_background_color }};
+    {% endif %}
+    
+    /* Border */
+    {% if block.settings.enable_border %}
+      border-width: {{ block.settings.border_width }}px;
+      border-style: {{ block.settings.border_style }};
+      {% if block.settings.border_color != blank %}
+        border-color: rgba({{ block.settings.border_color.red }}, {{ block.settings.border_color.green }}, {{ block.settings.border_color.blue }}, {{ block.settings.border_opacity | divided_by: 100.0 }});
+      {% endif %}
+    {% else %}
+      border: none;
+    {% endif %}
+    
+    /* Border Radius */
+    border-radius: {{ block.settings.border_radius }}px;
+    
+    /* Box Shadow */
+    {% if block.settings.enable_box_shadow %}
+      box-shadow: {{ block.settings.shadow_x_offset }}px {{ block.settings.shadow_y_offset }}px {{ block.settings.shadow_blur }}px rgba({{ block.settings.shadow_color.red }}, {{ block.settings.shadow_color.green }}, {{ block.settings.shadow_color.blue }}, {{ block.settings.shadow_opacity | divided_by: 100.0 }});
+    {% else %}
+      box-shadow: none;
+    {% endif %}
+    
+    padding-top: {{ block.settings.button_vertical_spacing }}px;
+    padding-bottom: {{ block.settings.button_vertical_spacing }}px;
+    padding-left: {{ block.settings.button_horizontal_spacing }}px;
+    padding-right: {{ block.settings.button_horizontal_spacing }}px;
+    width: fit-content;
+    text-decoration: none;
+    margin-top: {{ block.settings.padding_top }}px;
+    margin-bottom: {{ block.settings.padding_bottom }}px;
+    cursor: pointer;
+    max-width: 100%;
+    {% if block.settings.button_full_width %}
+      width: 100%;
+      padding-left: 6px;
+      padding-right: 6px;
+    {% endif %}
+  }
+  .block-{{ block.id }} .advertorial-cta-button__text {
+    font-size: {{ block.settings.button_text_font_size }}px;
+    line-height: calc(100% + 6px);
+    color: {{ block.settings.button_text_color }};
+    font-weight: 500;
+  }
+  .block-{{ block.id }} .advertorial-cta-button__subtext {
+    font-size: {{ block.settings.button_subtext_font_size }}px;
+    line-height: calc(100% + 14px);
+    color: {{ block.settings.button_subtext_color }};
+    font-weight: 400;
+  }
+  @media (max-width: 1024px) {
+    .block-{{ block.id }} {
+      margin-top: {{ block.settings.padding_top_mobile }}px;
+      margin-bottom: {{ block.settings.padding_bottom_mobile }}px;
+      padding-top: {{ block.settings.button_vertical_spacing_mobile }}px;
+      padding-bottom: {{ block.settings.button_vertical_spacing_mobile }}px;
+      padding-left: {{ block.settings.button_horizontal_spacing_mobile }}px;
+      padding-right: {{ block.settings.button_horizontal_spacing_mobile }}px;
+      {% if block.settings.button_full_width_mobile %}
+        width: 100%;
+        padding-left: 6px;
+        padding-right: 6px;
+      {% else %}
+        width: fit-content;
+      {% endif %}
+    }
+    .block-{{ block.id }} .advertorial-cta-button__text {
+      font-size: {{ block.settings.button_text_font_size_mobile }}px;
+    }
+    .block-{{ block.id }} .advertorial-cta-button__subtext {
+      font-size: {{ block.settings.button_subtext_font_size_mobile }}px;
+    }
+  }
+{% endstyle %}
+<a class="block-{{ block.id }} advertorial-cta-button" {% if block.settings.button_link == blank %}role="link" aria-disabled="true"{% else %}href="{{ block.settings.button_link }}"{% endif %} {{ block.shopify_attributes }}> 
+  <div class="advertorial-cta-button__text">{{ block.settings.button_text }}</div>
+  <div class="advertorial-cta-button__subtext">{{ block.settings.button_subtext }}</div>
+</a>
+{% schema %}
+{
+  "name": "CTA button",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_full_width",
+      "label": "Desktop button full width",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "button_full_width_mobile",
+      "label": "Mobile button full width",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "button_text",
+      "label": "Button main text",
+      "default": "👉 CHECK OUT BIOTIN 5000 mcg →"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "button_subtext",
+      "label": "Button subtext",
+      "default": "⭐ 4.8/5 stars from 100+ verified users"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Background & colors"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button background color",
+      "default": "#DF0C28",
+      "visible_if": "{{ block.settings.button_background_use_gradient == false }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_background_use_gradient",
+      "label": "Use gradient background",
+      "default": false
+    },
+    {
+      "type": "color_background",
+      "id": "button_background_gradient_color",
+      "label": "Gradient background",
+      "visible_if": "{{ block.settings.button_background_use_gradient }}",
+      "default": "linear-gradient(180deg, rgba(251, 51, 166, 1), rgba(127, 72, 176, 1) 50%, rgba(48, 145, 211, 1) 100%)"
+    },
+    {
+      "type": "header",
+      "content": "Border"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_border",
+      "label": "Enable border",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Border width",
+      "default": 1,
+      "visible_if": "{{ block.settings.enable_border }}"
+    },
+    {
+      "type": "select",
+      "id": "border_style",
+      "label": "Border style",
+      "options": [
+        {
+          "value": "solid",
+          "label": "Solid"
+        },
+        {
+          "value": "dashed",
+          "label": "Dashed"
+        },
+        {
+          "value": "dotted",
+          "label": "Dotted"
+        },
+        {
+          "value": "double",
+          "label": "Double"
+        }
+      ],
+      "default": "solid",
+      "visible_if": "{{ block.settings.enable_border }}"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "visible_if": "{{ block.settings.enable_border }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Border opacity",
+      "default": 100,
+      "visible_if": "{{ block.settings.enable_border }}"
+    },
+    {
+      "type": "header",
+      "content": "Corner radius"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Shadow"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_box_shadow",
+      "label": "Enable box shadow",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "shadow_x_offset",
+      "min": -20,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Shadow X offset",
+      "default": 0,
+      "visible_if": "{{ block.settings.enable_box_shadow }}"
+    },
+    {
+      "type": "range",
+      "id": "shadow_y_offset",
+      "min": -20,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Shadow Y offset",
+      "default": 10,
+      "visible_if": "{{ block.settings.enable_box_shadow }}"
+    },
+    {
+      "type": "range",
+      "id": "shadow_blur",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Shadow blur",
+      "default": 20,
+      "visible_if": "{{ block.settings.enable_box_shadow }}"
+    },
+    {
+      "type": "color",
+      "id": "shadow_color",
+      "label": "Shadow color",
+      "default": "#000000",
+      "visible_if": "{{ block.settings.enable_box_shadow }}"
+    },
+    {
+      "type": "range",
+      "id": "shadow_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Shadow opacity",
+      "default": 20,
+      "visible_if": "{{ block.settings.enable_box_shadow }}"
+    },
+    {
+      "type": "header",
+      "content": "Button spacing"
+    },
+    {
+      "type": "range",
+      "id": "button_vertical_spacing",
+      "label": "Desktop button vertical spacing",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "button_horizontal_spacing",
+      "label": "Desktop button horizontal spacing",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "default": 70,
+      "visible_if": "{{ block.settings.button_full_width == false }}"
+    },
+    {
+        "type": "range",
+        "id": "button_vertical_spacing_mobile",
+        "label": "Mobile button vertical spacing",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 21
+      },
+      {
+        "type": "range",
+        "id": "button_horizontal_spacing_mobile",
+        "label": "Mobile button horizontal spacing",
+        "min": 0,
+        "max": 200,
+        "step": 2,
+        "unit": "px",
+        "default": 70,
+        "visible_if": "{{ block.settings.button_full_width_mobile == false }}"
+      },
+    {
+      "type": "header",
+      "content": "Text styling"
+    },
+    {
+      "type": "range",
+      "id": "button_text_font_size",
+      "label": "Desktop button text font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "button_text_font_size_mobile",
+      "label": "Mobile button text font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Subtext styling"
+    },
+    {
+      "type": "range",
+      "id": "button_subtext_font_size",
+      "label": "Desktop button subtext font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "button_subtext_font_size_mobile",
+      "label": "Mobile button subtext font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "color",
+      "id": "button_subtext_color",
+      "label": "Button subtext color",
+      "default": "#ffffff"
+    },
+    {
+        "type": "header",
+        "content": "Padding"
+      },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "label": "Desktop padding top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "label": "Desktop padding bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_top_mobile",
+          "label": "Mobile padding top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },  
+        {
+          "type": "range",
+          "id": "padding_bottom_mobile",
+          "label": "Mobile padding bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        }
+  ],
+  "presets": [
+    {
+      "name": "CTA button"
+    }
+  ]
+}
+{% endschema %}

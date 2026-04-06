@@ -1,0 +1,575 @@
+{%- liquid
+  assign timer_id = 'timer-' | append: block.id
+  assign start_time = block.settings.start_time
+  assign end_time = block.settings.end_time
+  assign end_action = block.settings.end_action
+  assign end_message = block.settings.end_message
+  
+  comment
+    Calculate initial countdown values in Liquid to prevent layout shift
+  endcomment
+  assign now_timestamp = 'now' | date: '%s'
+  assign now_seconds = now_timestamp | plus: 0
+  
+  comment
+    Determine if we should show the countdown
+  endcomment
+  assign should_show_countdown = false
+  
+  if end_time != blank
+    assign end_timestamp = end_time | date: '%s'
+    assign end_seconds = end_timestamp | plus: 0
+    
+    comment
+      Check if end time is in the past (invalid configuration)
+    endcomment
+    if end_seconds <= now_seconds
+      comment
+        Invalid configuration - end time is in the past or now
+        Don't show countdown
+      endcomment
+      assign should_show_countdown = false
+    elsif start_time != blank
+      assign start_timestamp = start_time | date: '%s'
+      assign start_seconds = start_timestamp | plus: 0
+      
+      comment
+        Check if end time is before start time (invalid configuration)
+      endcomment
+      if end_seconds < start_seconds
+        comment
+          Invalid configuration - end time is before start time
+          Don't show countdown
+        endcomment
+        assign should_show_countdown = false
+      elsif now_seconds < start_seconds
+        comment
+          Before start time - don't show countdown
+        endcomment
+        assign should_show_countdown = false
+      else
+        comment
+          After start time - show time until end
+        endcomment
+        assign should_show_countdown = true
+        assign time_diff = end_seconds | minus: now_seconds
+      endif
+    else
+      comment
+        No start time - show time until end
+      endcomment
+      assign should_show_countdown = true
+      assign time_diff = end_seconds | minus: now_seconds
+    endif
+  endif
+  
+  comment
+    Calculate hours, minutes, seconds only if we should show countdown
+    No days - calculate hours from total time
+  endcomment
+  if should_show_countdown
+    assign initial_hours = time_diff | divided_by: 3600
+    assign remaining_seconds = time_diff | modulo: 3600
+    assign initial_minutes = remaining_seconds | divided_by: 60
+    assign initial_seconds = remaining_seconds | modulo: 60
+    
+    comment
+      Ensure values are not negative
+    endcomment
+    if initial_hours < 0
+      assign initial_hours = 0
+    endif
+    if initial_minutes < 0
+      assign initial_minutes = 0
+    endif
+    if initial_seconds < 0
+      assign initial_seconds = 0
+    endif
+  else
+    assign initial_hours = 0
+    assign initial_minutes = 0
+    assign initial_seconds = 0
+  endif
+-%}
+
+{% style %}
+  .block-{{ block.id }} {
+    padding-left: {{ block.settings.padding_left }}px;
+    padding-right: {{ block.settings.padding_right }}px;
+    padding-top: {{ block.settings.padding_top }}px;
+    padding-bottom: {{ block.settings.padding_bottom }}px;
+  }
+  .block-{{ block.id }} .timer-block__inner {
+    font-size: {{ block.settings.font_size_desktop }}px;
+    color: {{ block.settings.text_color }};
+    display: flex;
+    padding: {{ block.settings.vertical_spacing }}px {{ block.settings.horizontal_spacing }}px;
+    justify-content: center;
+    align-items: center;
+    {% if block.settings.text_bold %}
+      font-weight: 700;
+    {% endif %}
+    {% if block.settings.background_color_use_gradient %}
+      background: {{ block.settings.background_color_gradient }};
+    {% else %}
+      background-color: {{ block.settings.background_color }};
+    {% endif %}
+    border-radius: {{ block.settings.border_radius }}px;
+  }
+  .block-{{ block.id }} .timer-block__inner span {
+    display: inline-block;
+    min-width: calc(2ch + 4px);
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1, 'lnum' 1;
+  }
+  .block-{{ block.id }} .timer-ended {
+    font-size: {{ block.settings.font_size_desktop }}px;
+    color: {{ block.settings.text_color_end_timer }};
+    display: none;
+  }
+  @media (max-width: 768px) {
+    .block-{{ block.id }} {
+      padding-left: {{ block.settings.padding_left_mobile }}px;
+      padding-right: {{ block.settings.padding_right_mobile }}px;
+      padding-top: {{ block.settings.padding_top_mobile }}px;
+      padding-bottom: {{ block.settings.padding_bottom_mobile }}px;
+    }
+    .block-{{ block.id }} .timer-block__inner {
+      font-size: {{ block.settings.font_size_mobile }}px;
+      padding: {{ block.settings.vertical_spacing_mobile }}px {{ block.settings.horizontal_spacing_mobile }}px;
+    }
+    .block-{{ block.id }} .timer-ended {
+      font-size: {{ block.settings.font_size_mobile }}px;
+    }
+  }
+{% endstyle %}
+
+{% if should_show_countdown %}
+<div class="timer-block block-{{ block.id }}" id="{{ timer_id }}" {{ block.shopify_attributes }}>
+    <div class="timer-block__inner timer-display" 
+         data-start-time="{{ start_time }}" 
+         data-end-time="{{ end_time }}" 
+         data-end-action="{{ end_action }}" 
+         data-end-message="{{ end_message }}"
+         data-initial-hours="{{ initial_hours }}"
+         data-initial-minutes="{{ initial_minutes }}"
+         data-initial-seconds="{{ initial_seconds }}"
+         data-server-time="{{ now_timestamp }}">
+        <span class="timer-hours" id="hours-{{ timer_id }}">{{ initial_hours | prepend: '00' | slice: -2, 2 }}</span>:
+        <span class="timer-minutes" id="minutes-{{ timer_id }}">{{ initial_minutes | prepend: '00' | slice: -2, 2 }}</span>:
+        <span class="timer-seconds" id="seconds-{{ timer_id }}">{{ initial_seconds | prepend: '00' | slice: -2, 2 }}</span>
+    </div>
+    <div class="timer-ended" id="ended-{{ timer_id }}">
+      {{ end_message | default: 'This offer has ended.' }}
+    </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const timerElement = document.getElementById('{{ timer_id }}');
+    if(!timerElement) {
+      return;
+    }
+    const displayElement = timerElement.querySelector('.timer-display');
+    const endedElement = timerElement.querySelector('.timer-ended');
+    
+    const startTime = displayElement.dataset.startTime;
+    const endTime = displayElement.dataset.endTime;
+    const endAction = displayElement.dataset.endAction;
+    const endMessage = displayElement.dataset.endMessage;
+    const initialHours = parseInt(displayElement.dataset.initialHours) || 0;
+    const initialMinutes = parseInt(displayElement.dataset.initialMinutes) || 0;
+    const initialSeconds = parseInt(displayElement.dataset.initialSeconds) || 0;
+    const serverTime = parseInt(displayElement.dataset.serverTime) || 0;
+    
+    let countdownInterval;
+    // Use the total time remaining in seconds (calculated by Liquid)
+    let currentTimeLeft = (initialHours * 3600) + (initialMinutes * 60) + initialSeconds;
+    
+    // Determine if we're initially counting to start time
+    let isCountingToStart = false;
+    if (startTime && endTime) {
+      const now = new Date().getTime();
+      const formattedStartTime = formatDateTime(startTime);
+      const start = new Date(formattedStartTime).getTime();
+      isCountingToStart = now < start;
+    }
+    
+    // Helper function to add default time if only date is provided
+    function formatDateTime(dateTimeString) {
+      if (!dateTimeString || dateTimeString.trim() === '') return '';
+      
+      // If it's just a date (YYYY-MM-DD), add default time
+      if (/^\d{4}-\d{2}-\d{2}$/.test(dateTimeString.trim())) {
+        return dateTimeString.trim() + ' 00:00:00';
+      }
+      
+      // If it's date with partial time (YYYY-MM-DD HH), add minutes and seconds
+      if (/^\d{4}-\d{2}-\d{2} \d{2}$/.test(dateTimeString.trim())) {
+        return dateTimeString.trim() + ':00:00';
+      }
+      
+      // If it's date with hours and minutes (YYYY-MM-DD HH:MM), add seconds
+      if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(dateTimeString.trim())) {
+        return dateTimeString.trim() + ':00';
+      }
+      
+      return dateTimeString;
+    }
+    
+    function updateCountdown() {
+      // Decrease the countdown by 1 second
+      currentTimeLeft--;
+      
+      // Check if countdown has ended
+      if (currentTimeLeft <= 0) {
+        // If we were counting to start time, switch to counting to end time
+        if (isCountingToStart && startTime && endTime) {
+          const now = new Date().getTime();
+          const formattedEndTime = formatDateTime(endTime);
+          const end = new Date(formattedEndTime).getTime();
+          const timeLeft = end - now;
+          
+          if (timeLeft > 0) {
+            currentTimeLeft = Math.floor(timeLeft / 1000);
+            isCountingToStart = false;
+            updateDisplay(currentTimeLeft);
+            return;
+          }
+        }
+        
+        clearInterval(countdownInterval);
+        handleCountdownEnd();
+        return;
+      }
+      
+      // Update display with current time left
+      updateDisplay(currentTimeLeft);
+    }
+    
+    function updateDisplay(timeLeft) {
+      // timeLeft is already in seconds
+      const totalSeconds = timeLeft;
+      
+      // Calculate hours, minutes, seconds (no days)
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+      
+      const hoursElement = timerElement.querySelector('#hours-{{ timer_id }}');
+      const minutesElement = timerElement.querySelector('#minutes-{{ timer_id }}');
+      const secondsElement = timerElement.querySelector('#seconds-{{ timer_id }}');
+      
+      if (hoursElement) {
+        hoursElement.textContent = hours.toString().padStart(2, '0');
+      }
+      if (minutesElement) {
+        minutesElement.textContent = minutes.toString().padStart(2, '0');
+      }
+      if (secondsElement) {
+        secondsElement.textContent = seconds.toString().padStart(2, '0');
+      }
+    }
+    
+    function handleCountdownEnd() {
+      displayElement.style.display = 'none';
+      endedElement.style.display = 'block';
+      
+      if (endMessage) {
+        endedElement.textContent = endMessage;
+      }
+      
+      // Handle different end actions
+      switch(endAction) {
+        case 'hide_section':
+          timerElement.style.display = 'none';
+          break;
+        case 'show_message':
+          // Already showing message
+          break;
+        case 'redirect':
+          // Add redirect functionality if needed
+          break;
+      }
+    }
+    
+    // Start the countdown
+    if (endTime) {
+      // Update display immediately to fix any initial display issues
+      updateDisplay(currentTimeLeft);
+      updateCountdown();
+      countdownInterval = setInterval(updateCountdown, 1000);
+    }
+  });
+</script>
+{% endif %}
+{% schema %}
+{
+  "name": "Timer",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Timing"
+    },
+    {
+      "type": "text",
+      "id": "start_time",
+      "label": "Start time",
+      "info": "Optional. Format: YYYY-MM-DD or YYYY-MM-DD HH:MM:SS. Timer will only show after this time."
+    },
+    {
+      "type": "text",
+      "id": "end_time",
+      "label": "End time",
+      "info": "Required. Format: YYYY-MM-DD or YYYY-MM-DD HH:MM:SS. Timer counts down to this time."
+    },
+    {
+      "type": "header",
+      "content": "End state"
+    },
+    {
+      "type": "select",
+      "id": "end_action",
+      "label": "Action when timer ends",
+      "options": [
+        {
+          "value": "show_message",
+          "label": "Show message"
+        },
+        {
+          "value": "hide_section",
+          "label": "Hide timer"
+        }
+      ],
+      "default": "show_message"
+    },
+    {
+      "type": "text",
+      "id": "end_message",
+      "label": "End message",
+      "default": "This offer has ended.",
+      "info": "Message displayed when countdown ends",
+      "visible_if": "{{ block.settings.end_action == 'show_message' }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color_end_timer",
+      "label": "End message color",
+      "default": "#ff6b6b",
+      "visible_if": "{{ block.settings.end_action == 'show_message' }}"
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "font_size_desktop",
+      "label": "Desktop font size",
+      "min": 8,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "Mobile font size",
+      "min": 8,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#FD3794"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_bold",
+      "label": "Bold text",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff",
+      "visible_if": "{{ block.settings.background_color_use_gradient == false }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "background_color_use_gradient",
+      "label": "Use gradient background",
+      "default": false
+    },
+    {
+      "type": "color_background",
+      "id": "background_color_gradient",
+      "label": "Background gradient",
+      "visible_if": "{{ block.settings.background_color_use_gradient }}",
+      "default": "linear-gradient(180deg, rgba(251, 51, 166, 1), rgba(127, 72, 176, 1) 50%, rgba(48, 145, 211, 1) 100%)"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "vertical_spacing",
+      "label": "Desktop vertical spacing",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "horizontal_spacing",
+      "label": "Desktop horizontal spacing",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "vertical_spacing_mobile",
+      "label": "Mobile vertical spacing",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "horizontal_spacing_mobile",
+      "label": "Mobile horizontal spacing",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "t:blocks.text.settings.padding_top.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "t:blocks.text.settings.padding_bottom.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop left padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop right padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "t:blocks.text.settings.padding_top_mobile.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "label": "t:blocks.text.settings.padding_bottom_mobile.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile left padding",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile right padding",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Timer",
+      "settings": {
+        "start_time": "",
+        "end_time": "2025-12-31 23:59:59",
+        "end_action": "show_message",
+        "end_message": "This offer has ended.",
+        "text_color_end_timer": "#ff6b6b"
+      }
+    }
+  ]
+}
+{% endschema %}

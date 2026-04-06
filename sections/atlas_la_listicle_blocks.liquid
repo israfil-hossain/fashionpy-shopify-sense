@@ -1,0 +1,291 @@
+{% style %}
+  #shopify-section-{{ section.id }} .listicle-blocks {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    {% if section.settings.background_color_use_gradient %}
+      background: {{ section.settings.background_color_gradient }};
+    {% else %}
+      background-color: {{ section.settings.background_color }};
+    {% endif %}
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  #shopify-section-{{ section.id }} .listicle-blocks__inner {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    {% if section.settings.use_full_width %}
+      max-width: 100% !important;
+    {% else %}
+      max-width: {{ section.settings.desktop_section_max_width }}px !important;
+    {% endif %}
+  }
+  #shopify-section-{{ section.id }} .listicle-top-title {
+    {% if section.settings.show_top_title_desktop %}
+      display: flex;
+    {% else %}
+      display: none;
+    {% endif %}
+    border-radius: {{ section.settings.top_title_border_radius }}px {{ section.settings.top_title_border_radius }}px 0 0;
+    padding:{{ section.settings.top_title_vertical_padding }}px {{ section.settings.top_title_horizontal_padding }}px;
+    position:absolute;
+    transform: translate(-50%,-100%) ;
+    left: 50%;
+    top:0;
+    color:{{ section.settings.top_title_color }};
+    line-height: calc(100% + 12px);
+    font-size: {{ section.settings.top_title_font_size }}px;
+    background-color: {{ section.settings.top_title_background_color }};
+    text-align: center;
+    white-space: nowrap;
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .listicle-top-title {
+      {% if section.settings.show_top_title_mobile %}
+        display: flex;
+      {% else %}
+        display: none;
+      {% endif %}
+      border-radius: {{ section.settings.top_title_border_radius_mobile }}px {{ section.settings.top_title_border_radius_mobile }}px 0 0;
+      padding:{{ section.settings.top_title_vertical_padding_mobile }}px {{ section.settings.top_title_horizontal_padding_mobile }}px;
+      font-size: {{ section.settings.top_title_font_size_mobile }}px;
+    }
+  }
+  #shopify-section-{{ section.id }} .listicle-top-title strong {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  #shopify-section-{{ section.id }} .page-width {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .page-width {
+      padding: 0 50px;
+    }
+  }
+{% endstyle %}
+<div class="listicle-blocks">
+  <div class="listicle-blocks__inner {% if section.settings.use_full_width == false %}page-width{% endif %}">
+    {% if section.settings.top_title != blank %}
+      {% if section.settings.show_top_title_desktop or section.settings.show_top_title_mobile %}
+        <div class="listicle-top-title">
+                {{ section.settings.top_title }}
+        </div>
+      {% endif %}
+    {% endif %}
+    {% content_for 'blocks' %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Listicle blocks",
+  "blocks": [
+    {
+      "type": "atlas_la_text"
+    },
+    {
+      "type": "atlas_la_listicle_items"
+    },
+    {
+      "type": "atlas_la_layout"
+    }
+  ],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "use_full_width",
+      "label": "Use full width",
+      "default": false
+    },
+    {
+        "type": "range",
+        "id": "desktop_section_max_width",
+        "label": "Desktop section max width",
+        "min": 800,
+        "max": 1400,
+        "step": 50,
+        "unit": "px",
+        "default": 1000,
+        "visible_if": "{{ section.settings.use_full_width == false }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "show_top_title_desktop",
+        "label": "Desktop show top title",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_top_title_mobile",
+        "label": "Mobile show top title",
+        "default": true
+      },
+      {
+        "type": "inline_richtext",
+        "id": "top_title",
+        "label": "Top title",
+        "default": "Section title",
+        "visible_if": "{{ section.settings.show_top_title_desktop or section.settings.show_top_title_mobile }}"
+      },
+      {
+        "type": "color",
+        "id": "top_title_background_color",
+        "label": "Top title background color",
+        "default": "#ffffff",
+        "visible_if": "{{ section.settings.show_top_title_desktop or section.settings.show_top_title_mobile }}"
+      },
+      {
+        "type": "range",
+        "id": "top_title_border_radius",
+        "label": "Desktop top title border radius",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 20,
+        "visible_if": "{{ section.settings.show_top_title_desktop }}"
+      },
+      {
+        "type": "range",
+        "id": "top_title_border_radius_mobile",
+        "label": "Mobile top title border radius",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 20,
+        "visible_if": "{{ section.settings.show_top_title_mobile }}"
+      },
+      {
+        "type": "range",
+        "id": "top_title_vertical_padding",
+        "label": "Desktop top title vertical spacing",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 9,
+        "visible_if": "{{ section.settings.show_top_title_desktop }}"
+      },
+      {
+        "type": "range",
+        "id": "top_title_vertical_padding_mobile",
+        "label": "Mobile top title vertical spacing",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 9,
+        "visible_if": "{{ section.settings.show_top_title_mobile }}"
+      },
+      {
+        "type": "range",
+        "id": "top_title_horizontal_padding",
+        "label": "Desktop top title horizontal spacing",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 16,
+        "visible_if": "{{ section.settings.show_top_title_desktop }}"
+      },
+      {
+        "type": "range",
+        "id": "top_title_horizontal_padding_mobile",
+        "label": "Mobile top title horizontal spacing",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 16,
+        "visible_if": "{{ section.settings.show_top_title_mobile }}"
+      },
+      {
+        "type": "color",
+        "id": "top_title_color",
+        "label": "Top title color",
+        "default": "#1D1A2D",
+        "visible_if": "{{ section.settings.show_top_title_desktop or section.settings.show_top_title_mobile }}"
+      },
+      {
+        "type": "range",
+        "id": "top_title_font_size",
+        "label": "Desktop top title font size",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 16,
+        "visible_if": "{{ section.settings.show_top_title_desktop }}"
+      },
+      {
+        "type": "range",
+        "id": "top_title_font_size_mobile",
+        "label": "Mobile top title font size",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 16,
+        "visible_if": "{{ section.settings.show_top_title_mobile }}"
+      },
+    {
+        "type": "header",
+        "content": "Appearance"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Background color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "checkbox",
+        "id": "background_color_use_gradient",
+        "label": "Use gradient background",
+        "default": false
+      },
+      {
+        "type": "color_background",
+        "id": "background_color_gradient",
+        "label": "Background gradient",
+        "visible_if": "{{ section.settings.background_color_use_gradient }}",
+        "default": "linear-gradient(180deg, rgba(251, 51, 166, 1), rgba(127, 72, 176, 1) 50%, rgba(48, 145, 211, 1) 100%)"
+      },
+    {
+        "type": "header",
+        "content": "Padding"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Padding top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Padding bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 0
+      }
+  ],
+  "presets": [
+    {
+      "name": "Listicle blocks"
+    }
+  ]
+}
+{% endschema %}

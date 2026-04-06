@@ -1,0 +1,1070 @@
+{% style %}
+  .block-{{ block.id }} {
+    padding-top: {{ block.settings.padding_top_mobile }}px;
+    padding-bottom: {{ block.settings.padding_bottom_mobile }}px;
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.gap_between_cards_mobile }}px;
+    list-style: none;
+    padding-left: 0;
+    margin:0;
+  }
+  .block-{{ block.id }} .advertorial-review-cards__item {
+    width: 100%;
+    background: {{ block.settings.card_background_color }};
+    border: {{ block.settings.card_border_width }}px solid {{ block.settings.card_border_color }};
+    display: flex;
+    gap: {{ block.settings.gap_between_image_and_content_mobile }}px;
+    padding: {{ block.settings.card_padding_desktop }}px;
+  }
+  .block-{{ block.id }} .advertorial-review-cards__item-image {
+    width: 100%;
+    object-fit: cover;
+    {% if block.settings.image_height_mobile == 'adapt' %}
+      height: auto;
+    {% elsif block.settings.image_height_mobile == 'small' %}
+      height: 300px;
+    {% elsif block.settings.image_height_mobile == 'medium' %}
+      height: 400px;
+    {% elsif block.settings.image_height_mobile == 'large' %}
+      height: 500px;
+    {% endif %}
+  }
+  .block-{{ block.id }} .advertorial-review-cards__item-content {
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.content_gap_mobile }}px;
+  }
+  .block-{{ block.id }} .advertorial-reviews-cards__author-content {
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.author_content_gap_mobile }}px;
+  }
+  .block-{{ block.id }} .advertorial-review-cards__item-author {
+    display: flex;
+    gap: {{ block.settings.author_gap_mobile }}px;
+  }
+  .block-{{ block.id }} .advertorial-review-cards__item-author-image {
+    width: {{ block.settings.author_image_size_mobile }}px;
+    height: {{ block.settings.author_image_size_mobile }}px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .block-{{ block.id }} .advertorial-review-cards__item-author-name {
+    font-size: {{ block.settings.author_name_font_size_mobile }}px;
+    line-height: 100%;
+    color: {{ block.settings.author_name_color }};
+  }
+  .block-{{ block.id }} .advertorial-review-cards__item-text {
+    font-size: {{ block.settings.text_font_size_mobile }}px;
+    line-height: calc(100% + 12px);
+    color: {{ block.settings.text_color }};
+  }
+  .block-{{ block.id }} .advertorial-review-cards__item-text p {
+    margin: 0;
+  }
+  .block-{{ block.id }} .advertorial-reviews-cards__author-name-and-verified {
+    display: flex;
+    gap: {{ block.settings.name_and_verified_gap_mobile }}px;
+    align-items: center;
+  }
+  .block-{{ block.id }} .advertorial-reviews-cards__author-verified-icon {
+    width: {{ block.settings.verified_icon_size_mobile }}px;
+    height: {{ block.settings.verified_icon_size_mobile }}px;
+  }
+  .block-{{ block.id }} .advertorial-reviews-cards__author-stars {
+    display: flex;
+    gap: {{ block.settings.stars_gap_mobile }}px;
+  }
+  .block-{{ block.id }} .advertorial-reviews-cards__author-stars-star {
+    width: {{ block.settings.star_size_mobile }}px;
+    height: {{ block.settings.star_size_mobile }}px;
+  }
+  .block-{{  block.id  }} .advertorial-reviews-cards__author-name {
+    font-size: {{ block.settings.author_name_display_font_size_mobile }}px;
+    line-height: calc(100% + 11px);
+    color: {{ block.settings.author_name_display_color }};
+  }
+  .block-{{  block.id  }} .advertorial-reviews-cards__author-name strong {
+    font-weight: 700;
+  }
+  .block-{{  block.id  }} .advertorial-reviews-cards__author-location {
+    font-size: {{ block.settings.author_location_font_size_mobile }}px;
+    line-height: calc(100% + 13px);
+    color: {{ block.settings.author_location_color }};
+  }
+
+  .block-{{ block.id }} p {
+    margin: 0;
+  }
+  @media (max-width: 768px) {
+    .block-{{ block.id }} .advertorial-review-cards__item { 
+      flex-direction: column-reverse;
+      padding: {{ block.settings.card_padding_mobile }}px;
+    }
+  }
+  @media screen and (min-width: 769px) {
+    .block-{{ block.id }} {
+      padding-top: {{ block.settings.padding_top }}px;
+      padding-bottom: {{ block.settings.padding_bottom }}px;
+      gap: {{ block.settings.gap_between_cards }}px;
+    }
+    .block-{{ block.id }} .advertorial-review-cards__item {
+      gap: {{ block.settings.gap_between_image_and_content }}px;
+    }
+    .block-{{ block.id }} .advertorial-review-cards__item-image {
+      width: {{ block.settings.image_width }}px;
+      height: {{ block.settings.image_height }}px;
+    }
+    .block-{{ block.id }} .advertorial-review-cards__item-content {
+      gap: {{ block.settings.content_gap }}px;
+    }
+    .block-{{ block.id }} .advertorial-reviews-cards__author-content {
+      gap: {{ block.settings.author_content_gap }}px;
+    }
+    .block-{{ block.id }} .advertorial-review-cards__item-author {
+      gap: {{ block.settings.author_gap }}px;
+    }
+    .block-{{ block.id }} .advertorial-review-cards__item-author-image {
+      width: {{ block.settings.author_image_size }}px;
+      height: {{ block.settings.author_image_size }}px;
+    }
+    .block-{{ block.id }} .advertorial-review-cards__item-author-name {
+      font-size: {{ block.settings.author_name_font_size }}px;
+    }
+    .block-{{ block.id }} .advertorial-review-cards__item-text {
+      font-size: {{ block.settings.text_font_size }}px;
+    }
+    .block-{{ block.id }} .advertorial-reviews-cards__author-name-and-verified {
+      gap: {{ block.settings.name_and_verified_gap }}px;
+    }
+    .block-{{ block.id }} .advertorial-reviews-cards__author-verified-icon {
+      width: {{ block.settings.verified_icon_size }}px;
+      height: {{ block.settings.verified_icon_size }}px;
+    }
+    .block-{{ block.id }} .advertorial-reviews-cards__author-stars {
+      gap: {{ block.settings.stars_gap }}px;
+    }
+    .block-{{ block.id }} .advertorial-reviews-cards__author-stars-star {
+      width: {{ block.settings.star_size }}px;
+      height: {{ block.settings.star_size }}px;
+    }
+    .block-{{  block.id  }} .advertorial-reviews-cards__author-name {
+      font-size: {{ block.settings.author_name_display_font_size }}px;
+    }
+    .block-{{  block.id  }} .advertorial-reviews-cards__author-location {
+      font-size: {{ block.settings.author_location_font_size }}px;
+    }
+  }
+{% endstyle %}
+<ul class="advertorial-review-cards block-{{ block.id }}" {{ block.shopify_attributes }}>
+    {% if block.settings.image_1 != blank %}
+        <li class="advertorial-review-cards__item">
+            <img class="advertorial-review-cards__item-image" src="{{ block.settings.image_1 | image_url: width: 500 }}" width="500" height="500" alt="{{ block.settings.image_1.alt }}">
+            <div class="advertorial-review-cards__item-content">
+                <div class="advertorial-review-cards__item-author">
+                    {% if block.settings.author_image_1 != blank %}
+                        <img class="advertorial-review-cards__item-author-image" src="{{ block.settings.author_image_1 | image_url: width: 100 }}" width="100" height="100" alt="{{ block.settings.author_image_1.alt }}">
+                    {% endif %}
+                    <div class="advertorial-reviews-cards__author-content">
+                        <div class="advertorial-reviews-cards__author-name-and-verified">
+                            <div class="advertorial-reviews-cards__author-name">{{ block.settings.author_name_1 }}</div>
+                        
+                            <svg class="advertorial-reviews-cards__author-verified-icon" width="{{ block.settings.verified_icon_size_mobile }}" height="{{ block.settings.verified_icon_size_mobile }}" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2.70022 12.5998C2.08099 11.9806 2.49156 10.6795 2.17656 9.91762C1.84945 9.13079 0.650024 8.49137 0.650024 7.65002C0.650024 6.80868 1.84945 6.16926 2.17656 5.38243C2.49156 4.62118 2.08099 3.31945 2.70022 2.70022C3.31945 2.08099 4.62118 2.49156 5.38243 2.17656C6.17262 1.84945 6.80868 0.650024 7.65002 0.650024C8.49137 0.650024 9.13079 1.84945 9.91762 2.17656C10.6795 2.49156 11.9806 2.08099 12.5998 2.70022C13.2191 3.31945 12.8085 4.62051 13.1235 5.38243C13.4506 6.17262 14.65 6.80868 14.65 7.65002C14.65 8.49137 13.4506 9.13079 13.1235 9.91762C12.8085 10.6795 13.2191 11.9806 12.5998 12.5998C11.9806 13.2191 10.6795 12.8085 9.91762 13.1235C9.13079 13.4506 8.49137 14.65 7.65002 14.65C6.80868 14.65 6.16926 13.4506 5.38243 13.1235C4.62118 12.8085 3.31945 13.2191 2.70022 12.5998Z" fill="{{ block.settings.verified_icon_color }}" stroke="{{ block.settings.verified_icon_color }}" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M5.3551 7.65002L6.89276 9.15002L10.4806 5.65002" stroke="{{ block.settings.verified_checkmark_color }}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                  
+                            <div class="advertorial-reviews-cards__author-location">{{ block.settings.author_location_1 }}</div>
+                        </div>
+                        <div class="advertorial-reviews-cards__author-stars">
+                            {% liquid
+                              assign rating = block.settings.author_stars_1 | default: 5
+                              assign full_stars = rating | floor
+                              assign has_half_star = false
+                              assign decimal = rating | modulo: 1
+
+                              if decimal >= 0.3 and decimal <= 0.7
+                                assign has_half_star = true
+                              elsif decimal > 0.7
+                                assign full_stars = full_stars | plus: 1
+                              endif
+
+                              assign empty_stars = 5 | minus: full_stars
+                              if has_half_star
+                                assign empty_stars = empty_stars | minus: 1
+                              endif
+                            %}
+
+                            {% comment %} Full stars {% endcomment %}
+                            {% for i in (1..full_stars) %}
+                              {% render 'icon-star-full', color: block.settings.star_color, size: block.settings.star_size_mobile %}
+                            {% endfor %}
+
+                            {% comment %} Half star {% endcomment %}
+                            {% if has_half_star %}
+                              {% render 'icon-star-half', color: block.settings.star_color, background_color: block.settings.star_background_color, size: block.settings.star_size_mobile %}
+                            {% endif %}
+
+                            {% comment %} Empty stars {% endcomment %}
+                            {% for i in (1..empty_stars) %}
+                              {% render 'icon-star-empty', color: block.settings.star_color, background_color: block.settings.star_background_color, size: block.settings.star_size_mobile %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="advertorial-review-cards__item-text">{{ block.settings.text_1 }}</div>
+            </div>
+        </li>
+    {% endif %}
+    {% if block.settings.image_2 != blank %}
+        <li class="advertorial-review-cards__item">
+            <img class="advertorial-review-cards__item-image" src="{{ block.settings.image_2 | image_url: width: 500 }}" width="500" height="500" alt="{{ block.settings.image_2.alt }}">
+            <div class="advertorial-review-cards__item-content">
+                <div class="advertorial-review-cards__item-author">
+                    {% if block.settings.author_image_2 != blank %}
+                        <img class="advertorial-review-cards__item-author-image" src="{{ block.settings.author_image_2 | image_url: width: 100 }}" width="100" height="100" alt="{{ block.settings.author_image_2.alt }}">
+                    {% endif %}
+                    <div class="advertorial-reviews-cards__author-content">
+                        <div class="advertorial-reviews-cards__author-name-and-verified">
+                            <div class="advertorial-reviews-cards__author-name">{{ block.settings.author_name_2 }}</div>
+                        
+                            <svg class="advertorial-reviews-cards__author-verified-icon" width="{{ block.settings.verified_icon_size_mobile }}" height="{{ block.settings.verified_icon_size_mobile }}" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2.70022 12.5998C2.08099 11.9806 2.49156 10.6795 2.17656 9.91762C1.84945 9.13079 0.650024 8.49137 0.650024 7.65002C0.650024 6.80868 1.84945 6.16926 2.17656 5.38243C2.49156 4.62118 2.08099 3.31945 2.70022 2.70022C3.31945 2.08099 4.62118 2.49156 5.38243 2.17656C6.17262 1.84945 6.80868 0.650024 7.65002 0.650024C8.49137 0.650024 9.13079 1.84945 9.91762 2.17656C10.6795 2.49156 11.9806 2.08099 12.5998 2.70022C13.2191 3.31945 12.8085 4.62051 13.1235 5.38243C13.4506 6.17262 14.65 6.80868 14.65 7.65002C14.65 8.49137 13.4506 9.13079 13.1235 9.91762C12.8085 10.6795 13.2191 11.9806 12.5998 12.5998C11.9806 13.2191 10.6795 12.8085 9.91762 13.1235C9.13079 13.4506 8.49137 14.65 7.65002 14.65C6.80868 14.65 6.16926 13.4506 5.38243 13.1235C4.62118 12.8085 3.31945 13.2191 2.70022 12.5998Z" fill="{{ block.settings.verified_icon_color }}" stroke="{{ block.settings.verified_icon_color }}" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M5.3551 7.65002L6.89276 9.15002L10.4806 5.65002" stroke="{{ block.settings.verified_checkmark_color }}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                  
+                            <div class="advertorial-reviews-cards__author-location">{{ block.settings.author_location_2 }}</div>
+                        </div>
+                        <div class="advertorial-reviews-cards__author-stars">
+                            {% liquid
+                              assign rating = block.settings.author_stars_2 | default: 5
+                              assign full_stars = rating | floor
+                              assign has_half_star = false
+                              assign decimal = rating | modulo: 1
+
+                              if decimal >= 0.3 and decimal <= 0.7
+                                assign has_half_star = true
+                              elsif decimal > 0.7
+                                assign full_stars = full_stars | plus: 1
+                              endif
+
+                              assign empty_stars = 5 | minus: full_stars
+                              if has_half_star
+                                assign empty_stars = empty_stars | minus: 1
+                              endif
+                            %}
+
+                            {% comment %} Full stars {% endcomment %}
+                            {% for i in (1..full_stars) %}
+                              {% render 'icon-star-full', color: block.settings.star_color, size: block.settings.star_size_mobile %}
+                            {% endfor %}
+
+                            {% comment %} Half star {% endcomment %}
+                            {% if has_half_star %}
+                              {% render 'icon-star-half', color: block.settings.star_color, background_color: block.settings.star_background_color, size: block.settings.star_size_mobile %}
+                            {% endif %}
+
+                            {% comment %} Empty stars {% endcomment %}
+                            {% for i in (1..empty_stars) %}
+                              {% render 'icon-star-empty', color: block.settings.star_color, background_color: block.settings.star_background_color, size: block.settings.star_size_mobile %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="advertorial-review-cards__item-text">{{ block.settings.text_2 }}</div>
+            </div>
+        </li>
+    {% endif %}
+    {% if block.settings.image_3 != blank %}
+        <li class="advertorial-review-cards__item">
+            <img class="advertorial-review-cards__item-image" src="{{ block.settings.image_3 | image_url: width: 500 }}" width="500" height="500" alt="{{ block.settings.image_3.alt }}">
+            <div class="advertorial-review-cards__item-content">
+                <div class="advertorial-review-cards__item-author">
+                    {% if block.settings.author_image_3 != blank %}
+                        <img class="advertorial-review-cards__item-author-image" src="{{ block.settings.author_image_3 | image_url: width: 100 }}" width="100" height="100" alt="{{ block.settings.author_image_3.alt }}">
+                    {% endif %}
+                    <div class="advertorial-reviews-cards__author-content">
+                        <div class="advertorial-reviews-cards__author-name-and-verified">
+                            <div class="advertorial-reviews-cards__author-name">{{ block.settings.author_name_3 }}</div>
+                        
+                            <svg class="advertorial-reviews-cards__author-verified-icon" width="{{ block.settings.verified_icon_size_mobile }}" height="{{ block.settings.verified_icon_size_mobile }}" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2.70022 12.5998C2.08099 11.9806 2.49156 10.6795 2.17656 9.91762C1.84945 9.13079 0.650024 8.49137 0.650024 7.65002C0.650024 6.80868 1.84945 6.16926 2.17656 5.38243C2.49156 4.62118 2.08099 3.31945 2.70022 2.70022C3.31945 2.08099 4.62118 2.49156 5.38243 2.17656C6.17262 1.84945 6.80868 0.650024 7.65002 0.650024C8.49137 0.650024 9.13079 1.84945 9.91762 2.17656C10.6795 2.49156 11.9806 2.08099 12.5998 2.70022C13.2191 3.31945 12.8085 4.62051 13.1235 5.38243C13.4506 6.17262 14.65 6.80868 14.65 7.65002C14.65 8.49137 13.4506 9.13079 13.1235 9.91762C12.8085 10.6795 13.2191 11.9806 12.5998 12.5998C11.9806 13.2191 10.6795 12.8085 9.91762 13.1235C9.13079 13.4506 8.49137 14.65 7.65002 14.65C6.80868 14.65 6.16926 13.4506 5.38243 13.1235C4.62118 12.8085 3.31945 13.2191 2.70022 12.5998Z" fill="{{ block.settings.verified_icon_color }}" stroke="{{ block.settings.verified_icon_color }}" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M5.3551 7.65002L6.89276 9.15002L10.4806 5.65002" stroke="{{ block.settings.verified_checkmark_color }}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                  
+                            <div class="advertorial-reviews-cards__author-location">{{ block.settings.author_location_3 }}</div>
+                        </div>
+                        <div class="advertorial-reviews-cards__author-stars">
+                            {% liquid
+                              assign rating = block.settings.author_stars_3 | default: 5
+                              assign full_stars = rating | floor
+                              assign has_half_star = false
+                              assign decimal = rating | modulo: 1
+
+                              if decimal >= 0.3 and decimal <= 0.7
+                                assign has_half_star = true
+                              elsif decimal > 0.7
+                                assign full_stars = full_stars | plus: 1
+                              endif
+
+                              assign empty_stars = 5 | minus: full_stars
+                              if has_half_star
+                                assign empty_stars = empty_stars | minus: 1
+                              endif
+                            %}
+
+                            {% comment %} Full stars {% endcomment %}
+                            {% for i in (1..full_stars) %}
+                              {% render 'icon-star-full', color: block.settings.star_color, size: block.settings.star_size_mobile %}
+                            {% endfor %}
+
+                            {% comment %} Half star {% endcomment %}
+                            {% if has_half_star %}
+                              {% render 'icon-star-half', color: block.settings.star_color, background_color: block.settings.star_background_color, size: block.settings.star_size_mobile %}
+                            {% endif %}
+
+                            {% comment %} Empty stars {% endcomment %}
+                            {% for i in (1..empty_stars) %}
+                              {% render 'icon-star-empty', color: block.settings.star_color, background_color: block.settings.star_background_color, size: block.settings.star_size_mobile %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="advertorial-review-cards__item-text">{{ block.settings.text_3 }}</div>
+            </div>
+        </li>
+    {% endif %}
+    {% if block.settings.image_4 != blank %}
+        <li class="advertorial-review-cards__item">
+            <img class="advertorial-review-cards__item-image" src="{{ block.settings.image_4 | image_url: width: 500 }}" width="500" height="500" alt="{{ block.settings.image_4.alt }}">
+            <div class="advertorial-review-cards__item-content">
+                <div class="advertorial-review-cards__item-author">
+                    {% if block.settings.author_image_4 != blank %}
+                        <img class="advertorial-review-cards__item-author-image" src="{{ block.settings.author_image_4 | image_url: width: 100 }}" width="100" height="100" alt="{{ block.settings.author_image_4.alt }}">
+                    {% endif %}
+                    <div class="advertorial-reviews-cards__author-content">
+                        <div class="advertorial-reviews-cards__author-name-and-verified">
+                            <div class="advertorial-reviews-cards__author-name">{{ block.settings.author_name_4 }}</div>
+                        
+                            <svg class="advertorial-reviews-cards__author-verified-icon" width="{{ block.settings.verified_icon_size_mobile }}" height="{{ block.settings.verified_icon_size_mobile }}" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2.70022 12.5998C2.08099 11.9806 2.49156 10.6795 2.17656 9.91762C1.84945 9.13079 0.650024 8.49137 0.650024 7.65002C0.650024 6.80868 1.84945 6.16926 2.17656 5.38243C2.49156 4.62118 2.08099 3.31945 2.70022 2.70022C3.31945 2.08099 4.62118 2.49156 5.38243 2.17656C6.17262 1.84945 6.80868 0.650024 7.65002 0.650024C8.49137 0.650024 9.13079 1.84945 9.91762 2.17656C10.6795 2.49156 11.9806 2.08099 12.5998 2.70022C13.2191 3.31945 12.8085 4.62051 13.1235 5.38243C13.4506 6.17262 14.65 6.80868 14.65 7.65002C14.65 8.49137 13.4506 9.13079 13.1235 9.91762C12.8085 10.6795 13.2191 11.9806 12.5998 12.5998C11.9806 13.2191 10.6795 12.8085 9.91762 13.1235C9.13079 13.4506 8.49137 14.65 7.65002 14.65C6.80868 14.65 6.16926 13.4506 5.38243 13.1235C4.62118 12.8085 3.31945 13.2191 2.70022 12.5998Z" fill="{{ block.settings.verified_icon_color }}" stroke="{{ block.settings.verified_icon_color }}" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M5.3551 7.65002L6.89276 9.15002L10.4806 5.65002" stroke="{{ block.settings.verified_checkmark_color }}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                  
+                            <div class="advertorial-reviews-cards__author-location">{{ block.settings.author_location_4 }}</div>
+                        </div>
+                        <div class="advertorial-reviews-cards__author-stars">
+                            {% liquid
+                              assign rating = block.settings.author_stars_4 | default: 5
+                              assign full_stars = rating | floor
+                              assign has_half_star = false
+                              assign decimal = rating | modulo: 1
+
+                              if decimal >= 0.3 and decimal <= 0.7
+                                assign has_half_star = true
+                              elsif decimal > 0.7
+                                assign full_stars = full_stars | plus: 1
+                              endif
+
+                              assign empty_stars = 5 | minus: full_stars
+                              if has_half_star
+                                assign empty_stars = empty_stars | minus: 1
+                              endif
+                            %}
+
+                            {% comment %} Full stars {% endcomment %}
+                            {% for i in (1..full_stars) %}
+                              {% render 'icon-star-full', color: block.settings.star_color, size: block.settings.star_size_mobile %}
+                            {% endfor %}
+
+                            {% comment %} Half star {% endcomment %}
+                            {% if has_half_star %}
+                              {% render 'icon-star-half', color: block.settings.star_color, background_color: block.settings.star_background_color, size: block.settings.star_size_mobile %}
+                            {% endif %}
+
+                            {% comment %} Empty stars {% endcomment %}
+                            {% for i in (1..empty_stars) %}
+                              {% render 'icon-star-empty', color: block.settings.star_color, background_color: block.settings.star_background_color, size: block.settings.star_size_mobile %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="advertorial-review-cards__item-text">{{ block.settings.text_4 }}</div>
+            </div>
+        </li>
+    {% endif %}
+</ul>
+{% schema %}
+{
+  "name": "Review cards",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Item 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image 1",
+    },
+    {
+      "type": "image_picker",
+      "id": "author_image_1",
+      "label": "Author image 1",
+    },
+    {
+      "type": "richtext",
+      "id": "author_name_1",
+      "label": "Author name 1",
+      "default": "<p><strong>Rob. T</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "author_location_1",
+      "label": "Author location 1",
+      "default": "<p>Los Angeles</p>"
+    },
+    {
+      "type": "range",
+      "id": "author_stars_1",
+      "label": "Author stars 1",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "default": 5
+    },
+    {
+      "type": "richtext",
+      "id": "text_1",
+      "label": "Text 1",
+      "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Item 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image 2",
+    },
+    {
+      "type": "image_picker",
+      "id": "author_image_2",
+      "label": "Author image 2",
+    },
+    {
+      "type": "richtext",
+      "id": "author_name_2",
+      "label": "Author name 2",
+      "default": "<p><strong>Sarah. M</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "author_location_2",
+      "label": "Author location 2",
+      "default": "<p>New York</p>"
+    },
+    {
+      "type": "range",
+      "id": "author_stars_2",
+      "label": "Author stars 2",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "default": 5
+    },
+    {
+      "type": "richtext",
+      "id": "text_2",
+      "label": "Text 2",
+      "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Item 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Image 3",
+    },
+    {
+      "type": "image_picker",
+      "id": "author_image_3",
+      "label": "Author image 3",
+    },
+    {
+      "type": "richtext",
+      "id": "author_name_3",
+      "label": "Author name 3",
+      "default": "<p><strong>Mike. J</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "author_location_3",
+      "label": "Author location 3",
+      "default": "<p>Chicago</p>"
+    },
+    {
+      "type": "range",
+      "id": "author_stars_3",
+      "label": "Author stars 3",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "default": 5
+    },
+    {
+      "type": "richtext",
+      "id": "text_3",
+      "label": "Text 3",
+      "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Item 4"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_4",
+      "label": "Image 4",
+    },
+    {
+      "type": "image_picker",
+      "id": "author_image_4",
+      "label": "Author image 4",
+    },
+    {
+      "type": "richtext",
+      "id": "author_name_4",
+      "label": "Author name 4",
+      "default": "<p><strong>Emma. L</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "author_location_4",
+      "label": "Author location 4",
+      "default": "<p>San Francisco</p>"
+    },
+    {
+      "type": "range",
+      "id": "author_stars_4",
+      "label": "Author stars 4",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "default": 5
+    },
+    {
+      "type": "richtext",
+      "id": "text_4",
+      "label": "Text 4",
+      "default": "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "gap_between_cards",
+      "label": "Desktop Gap between cards",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "gap_between_cards_mobile",
+      "label": "Mobile Gap between cards",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "gap_between_image_and_content",
+      "label": "Desktop Gap between image and content",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "gap_between_image_and_content_mobile",
+      "label": "Mobile Gap between image and content",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "Card"
+    },
+    {
+      "type": "color",
+      "id": "card_background_color",
+      "label": "Card background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "card_border_width",
+      "label": "Card border width",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border color",
+      "default": "#F2F2F2"
+    },
+    {
+      "type": "range",
+      "id": "card_padding_desktop",
+      "label": "Desktop card padding",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "card_padding_mobile",
+      "label": "Mobile card padding",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "Desktop image width",
+      "min": 50,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 130
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "label": "Desktop image height",
+      "min": 50,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "id": "image_height_mobile",
+      "type": "select",
+      "label": "Mobile Image Height",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adapt"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "small"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "label": "Desktop Gap between text and author information",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "content_gap_mobile",
+      "label": "Mobile Gap between text and author information",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "range",
+      "id": "author_content_gap",
+      "label": "Desktop Author content gap",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "author_content_gap_mobile",
+      "label": "Mobile Author content gap",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "author_gap",
+      "label": "Desktop Gap between author image and author information",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 21
+    },
+    {
+      "type": "range",
+      "id": "author_gap_mobile",
+      "label": "Mobile Gap between author image and author information",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 21
+    },
+    {
+      "type": "header",
+      "content": "Author Image"
+    },
+    {
+      "type": "range",
+      "id": "author_image_size",
+      "label": "Desktop Author image size",
+      "min": 20,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 46
+    },
+    {
+      "type": "range",
+      "id": "author_image_size_mobile",
+      "label": "Mobile Author image size",
+      "min": 20,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 46
+    },
+    {
+      "type": "range",
+      "id": "author_name_font_size",
+      "label": "Desktop Author name font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "author_name_font_size_mobile",
+      "label": "Mobile Author name font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "range",
+      "id": "text_font_size",
+      "label": "Desktop Text font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "text_font_size_mobile",
+      "label": "Mobile Text font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#1D1A2D"
+    },
+    {
+      "type": "header",
+      "content": "Name and Verified"
+    },
+    {
+      "type": "range",
+      "id": "name_and_verified_gap",
+      "label": "Desktop Name and verified gap",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "name_and_verified_gap_mobile",
+      "label": "Mobile Name and verified gap",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Verified Icon"
+    },
+    {
+      "type": "range",
+      "id": "verified_icon_size",
+      "label": "Desktop Verified icon size",
+      "min": 8,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "verified_icon_size_mobile",
+      "label": "Mobile Verified icon size",
+      "min": 8,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "verified_icon_color",
+      "label": "Verified icon color",
+      "default": "#4063F0"
+    },
+    {
+      "type": "color",
+      "id": "verified_checkmark_color",
+      "label": "Verified checkmark color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Stars"
+    },
+    {
+      "type": "range",
+      "id": "stars_gap",
+      "label": "Desktop Stars gap",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "stars_gap_mobile",
+      "label": "Mobile Stars gap",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "star_size",
+      "label": "Desktop Star size",
+      "min": 8,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "star_size_mobile",
+      "label": "Mobile Star size",
+      "min": 8,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#EB9C1B"
+    },
+    {
+      "type": "color",
+      "id": "star_background_color",
+      "label": "Star background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Author Name Display"
+    },
+    {
+      "type": "range",
+      "id": "author_name_display_font_size",
+      "label": "Desktop Author name display font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "author_name_display_font_size_mobile",
+      "label": "Mobile Author name display font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "author_name_display_color",
+      "label": "Author name display color",
+      "default": "#1D1A2D"
+    },
+    {
+      "type": "header",
+      "content": "Author Location"
+    },
+    {
+      "type": "range",
+      "id": "author_location_font_size",
+      "label": "Desktop Author location font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "author_location_font_size_mobile",
+      "label": "Mobile Author location font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "author_location_color",
+      "label": "Author location color",
+      "default": "#606060"
+    },
+    {
+        "type": "header",
+        "content": "Padding"
+      },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "label": "Desktop padding top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "label": "Desktop padding bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_top_mobile",
+          "label": "Mobile padding top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },  
+        {
+          "type": "range",
+          "id": "padding_bottom_mobile",
+          "label": "Mobile padding bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        }
+  ],
+  "presets": [
+    {
+      "name": "Review cards"
+    }
+  ]
+}
+{% endschema %}

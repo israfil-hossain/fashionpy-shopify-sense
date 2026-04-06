@@ -1,0 +1,117 @@
+{% style %}
+  #shopify-section-{{ section.id }} .offer-card {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    {% if section.settings.use_gradient_background %}
+      background: {{ section.settings.background_color_gradient }};
+    {% else %}
+      background-color: rgba({{ section.settings.background_color.red }}, {{ section.settings.background_color.green }}, {{ section.settings.background_color.blue }}, {{ section.settings.background_color_opacity | divided_by: 100.0 }});
+    {% endif %}
+  }
+  #shopify-section-{{ section.id }} .offer-card__inner {
+    width: 100%;
+    display: flex;
+    max-width: {{ section.settings.max_width }}px;
+  }
+  #shopify-section-{{ section.id }} .page-width {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .page-width {
+      padding: 0 50px;
+    }
+  }
+{% endstyle %}
+<div class="offer-card">
+    <div class="offer-card__inner page-width">
+        {% content_for 'blocks' %}
+    </div>
+</div>
+{% schema %}
+{
+  "name": "Offer card",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+        "type": "range",
+        "id": "max_width",
+        "label": "Max width",
+        "min": 800,
+        "max": 1400,
+        "step": 50,
+        "unit": "px",
+        "default": 1150
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "background_color_opacity",
+      "label": "Background color opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "checkbox",
+      "id": "use_gradient_background",
+      "label": "Use gradient background",
+      "default": false
+    },
+    {
+      "type": "color_background",
+      "id": "background_color_gradient",
+      "label": "Gradient background color",
+      "default": "linear-gradient(90deg, #EE0979 0%, #FF6A00 100%)"
+    },
+    {
+        "type": "header",
+        "content": "Padding"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Padding top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Padding bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 0
+      }
+  ],
+  "blocks": [
+    {
+        "type": "atlas_la_layout"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Offer card"
+    }
+  ]
+}
+{% endschema %}

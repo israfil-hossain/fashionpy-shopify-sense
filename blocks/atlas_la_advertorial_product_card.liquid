@@ -1,0 +1,457 @@
+{% style %}
+  .block-{{ block.id }} {
+    padding-top: {{ block.settings.padding_top }}px;
+    padding-bottom: {{ block.settings.padding_bottom }}px;
+    display: flex;
+    border: {{ block.settings.border_width }}px solid {{ block.settings.border_color }};
+    width: 100%;
+    text-decoration: none;
+  }
+  .block-{{ block.id }} .advertorial-product-card__wrapper {
+    display: flex;
+    flex-direction: column;
+    background: {{ block.settings.background_color }};
+    align-items: center;
+    gap: {{ block.settings.wrapper_gap }}px;
+    width: 100%;
+    margin: {{ block.settings.margin_top }}px {{ block.settings.margin_right }}px {{ block.settings.margin_bottom }}px {{ block.settings.margin_left }}px;
+  }
+  .block-{{ block.id }} .advertorial-product-card__image {
+    width: 100%;
+    height: auto;
+    display: flex;
+  }
+  .block-{{ block.id }} .advertorial-product-card__image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  .block-{{ block.id }} .advertorial-product-card__review-stars {
+    display: flex;
+    gap: {{ block.settings.stars_gap }}px;
+  }
+  .block-{{ block.id }} .advertorial-product-card__title {
+    font-size: {{ block.settings.title_font_size }}px;
+    line-height: calc(100% + 12px);
+    color: {{ block.settings.title_color }};
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+  }
+  .block-{{ block.id }} .advertorial-product-card__review {
+    display: flex;
+    gap: {{ block.settings.review_gap }}px;
+    flex-direction: column;
+    align-items: center;
+  }
+  .block-{{ block.id }} .advertorial-product-card__review-text {
+    font-size: {{ block.settings.review_text_font_size }}px;
+    line-height: 100%;
+    color: {{ block.settings.review_text_color }};
+    font-weight: 300;
+    text-align: center;
+  }
+  .block-{{ block.id }} .advertorial-product-card__review-text p {
+    margin: 0;
+  }
+  .block-{{ block.id }} .advertorial-product-card__content {
+    display: flex;
+    flex-direction: column;
+    padding: {{ block.settings.content_padding_top }}px {{ block.settings.content_padding_right }}px {{ block.settings.content_padding_bottom }}px {{ block.settings.content_padding_left }}px;
+    gap: {{ block.settings.content_gap }}px;
+  }
+  @media (max-width: 1024px) {
+    .block-{{ block.id }} {
+      padding-top: {{ block.settings.padding_top_mobile }}px;
+      padding-bottom: {{ block.settings.padding_bottom_mobile }}px;
+    }
+  }
+{% endstyle %}
+{% assign product = block.settings.product %}
+{% assign rating = block.settings.rating | default: 5 %}
+{% if block.settings.override_product_image and block.settings.custom_image != blank %}
+  {% assign product_image = block.settings.custom_image %}
+  {% assign product_image_alt = block.settings.custom_image.alt | default: product.title %}
+{% else %}
+  {% assign product_image = product.featured_image %}
+  {% assign product_image_alt = product.title %}
+{% endif %}
+{% if block.settings.override_product_title and block.settings.custom_title != blank %}
+  {% assign product_title = block.settings.custom_title %}
+{% else %}
+  {% assign product_title = product.title %}
+{% endif %}
+<a class="advertorial-product-card block-{{ block.id }}" {% if product %}href="{{ product.url }}" {%else%} aria-disabled="true"{% endif %} {{ block.shopify_attributes }}>
+    <div class="advertorial-product-card__wrapper">
+        <div class="advertorial-product-card__image">
+            <img src="{{ product_image | image_url: width: 800 }}" alt="{{ product_image_alt }}" width="800" height="800">
+        </div>
+        <div class="advertorial-product-card__content">
+            <div class="advertorial-product-card__review">
+                <div class="advertorial-product-card__review-stars">
+                    {% liquid
+                      assign full_stars = rating | floor
+                      assign has_half_star = false
+                      assign decimal = rating | modulo: 1
+
+                      if decimal >= 0.3 and decimal <= 0.7
+                        assign has_half_star = true
+                      elsif decimal > 0.7
+                        assign full_stars = full_stars | plus: 1
+                      endif
+
+                      assign empty_stars = 5 | minus: full_stars
+                      if has_half_star
+                        assign empty_stars = empty_stars | minus: 1
+                      endif
+                    %}
+
+                    {% comment %} Full stars {% endcomment %}
+                    {% for i in (1..full_stars) %}
+                      {% render 'icon-star-full', color: block.settings.star_color, size: block.settings.star_size %}
+                    {% endfor %}
+
+                    {% comment %} Half star {% endcomment %}
+                    {% if has_half_star %}
+                      {% render 'icon-star-half', color: block.settings.star_color, background_color: block.settings.star_background_color, size: block.settings.star_size %}
+                    {% endif %}
+
+                    {% comment %} Empty stars {% endcomment %}
+                    {% for i in (1..empty_stars) %}
+                      {% render 'icon-star-empty', color: block.settings.star_color, background_color: block.settings.star_background_color, size: block.settings.star_size %}
+                    {% endfor %}
+                </div>
+                <div class="advertorial-product-card__review-text">
+                    {% assign formatted_rating = rating | round: 1 %}
+                    {{ block.settings.review_text | replace: '[rate_value]', formatted_rating }}
+                </div>
+            </div>
+            <h3 class="advertorial-product-card__title">{{ product_title }}</h3>
+        </div>
+    </div>
+</a>
+{% schema %}
+{
+  "name": "Product Card",
+  "tag": null,
+  "settings": [
+    {
+        "type": "product",
+        "id": "product",
+        "label": "Product"
+    },
+    {
+      "type": "checkbox",
+      "id": "override_product_image",
+      "label": "Override product image",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_image",
+      "label": "Custom image",
+      "visible_if": "{{ block.settings.override_product_image }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "override_product_title",
+      "label": "Override product title",
+      "default": false
+    },
+    {
+      "type": "inline_richtext",
+      "id": "custom_title",
+      "label": "Custom title",
+      "visible_if": "{{ block.settings.override_product_title }}"
+    },
+    {
+      "type": "richtext",
+      "id": "review_text",
+      "label": "Review text",
+      "default": "<p>[rate_value] Rated by 10,000+ UK Customers</p>"
+    },
+    {
+        "type": "paragraph",
+        "content": "Use [rate_value] to display the rating automatically."
+      },
+    {
+      "type": "header",
+      "content": "Rating display"
+    },
+    {
+      "type": "range",
+      "id": "rating",
+      "label": "Rating",
+      "min": 0,
+      "max": 5,
+      "step": 0.1,
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "stars_gap",
+      "label": "Stars gap",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "star_size",
+      "label": "Star size",
+      "min": 8,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "star_background_color",
+      "label": "Star background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "Card styling"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#FFE9F1"
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "default": "#A6A6A6"
+    },
+    {
+      "type": "header",
+      "content": "Layout & spacing"
+    },
+    {
+      "type": "range",
+      "id": "wrapper_gap",
+      "label": "Space between image and content",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "label": "Space inside card top",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "margin_right",
+      "label": "Space inside card right",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "label": "Space inside card bottom",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "margin_left",
+      "label": "Space inside card left",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Content spacing"
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "label": "Space between review and title",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "content_padding_top",
+      "label": "Space inside content top",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "content_padding_right",
+      "label": "Space inside content right",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "content_padding_bottom",
+      "label": "Space inside content bottom",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "content_padding_left",
+      "label": "Space inside content left",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "review_gap",
+      "label": "Space between stars and review text",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Title styling"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Title font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Review text styling"
+    },
+    {
+      "type": "range",
+      "id": "review_text_font_size",
+      "label": "Review text font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "review_text_color",
+      "label": "Review text color",
+      "default": "#000000"
+    },
+    {
+        "type": "header",
+        "content": "Padding"
+      },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "label": "Desktop padding top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "label": "Desktop padding bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_top_mobile",
+          "label": "Mobile padding top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },  
+        {
+          "type": "range",
+          "id": "padding_bottom_mobile",
+          "label": "Mobile padding bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        }
+  ],
+  "presets": [
+    {
+      "name": "Product Card"
+    }
+  ]
+}
+{% endschema %}

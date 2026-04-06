@@ -1,0 +1,415 @@
+{% style %}
+  .block-{{ block.id }} {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* Padding - Inner Spacing */
+    padding-top: {{ block.settings.padding_top }}px;
+    padding-bottom: {{ block.settings.padding_bottom }}px;
+    padding-left: {{ block.settings.padding_left }}px;
+    padding-right: {{ block.settings.padding_right }}px;
+    cursor: pointer;
+    
+    /* Border Radius */
+    border-radius: {{ block.settings.border_radius }}px;
+    
+    /* Border */
+    {% if block.settings.enable_border %}
+      border-width: {{ block.settings.border_width }}px;
+      border-style: {{ block.settings.border_style }};
+      {% if block.settings.border_color != blank %}
+        border-color: rgba({{ block.settings.border_color.red }}, {{ block.settings.border_color.green }}, {{ block.settings.border_color.blue }}, {{ block.settings.border_opacity | divided_by: 100.0 }});
+      {% endif %}
+    {% else %}
+      border: none;
+    {% endif %}
+    
+    /* Background */
+    {% if block.settings.enable_background %}
+      {% if block.settings.background_use_gradient and block.settings.background_gradient_color != blank %}
+        background: {{ block.settings.background_gradient_color }};
+      {% elsif block.settings.background_color != blank %}
+        background-color: rgba({{ block.settings.background_color.red }}, {{ block.settings.background_color.green }}, {{ block.settings.background_color.blue }}, {{ block.settings.background_opacity | divided_by: 100.0 }});
+      {% endif %}
+    {% endif %}
+    
+    /* Box Shadow */
+    {% if block.settings.enable_box_shadow %}
+      box-shadow: {{ block.settings.shadow_x_offset }}px {{ block.settings.shadow_y_offset }}px {{ block.settings.shadow_blur }}px rgba({{ block.settings.shadow_color.red }}, {{ block.settings.shadow_color.green }}, {{ block.settings.shadow_color.blue }}, {{ block.settings.shadow_opacity | divided_by: 100.0 }});
+    {% else %}
+      box-shadow: none;
+    {% endif %}
+    
+    /* Transition for scroll animation */
+    transition: transform 0.3s ease-in-out;
+  }
+  .block-{{ block.id }}.translate-down {
+    transform: translateY(100%);
+  }
+  .block-{{ block.id }} .advertorial-sticky-atc__image {
+    width: {{ block.settings.image_width }}px;
+    height: {{ block.settings.image_height }}px;
+    object-fit: cover;
+  }
+  @media (min-width: 768px) {
+    .block-{{ block.id }} {
+      display: none;
+    }
+  }
+{% endstyle %}
+{% if block.settings.product != blank %}
+<div class="advertorial-sticky-atc block-{{ block.id }}" data-product-url="{{ block.settings.product.url }}" {{ block.shopify_attributes }}>
+  {% content_for 'blocks' %}
+  {{ block.settings.product.featured_image | image_url: height: 500 | image_tag: class: 'advertorial-sticky-atc__image' }}
+</div>
+<script>
+  (function() {
+    const stickyAtc = document.querySelector('.block-{{ block.id }}');
+    if (!stickyAtc) return;
+    
+    const productUrl = stickyAtc.getAttribute('data-product-url');
+    
+    // Click event to redirect to product
+    stickyAtc.addEventListener('click', function(e) {
+      // Don't redirect if clicking on child elements that might have their own links
+      if (e.target.closest('a')) return;
+      if (productUrl) {
+        window.location.href = productUrl;
+      }
+    });
+    
+    // Scroll detection for translate animation
+    let lastScrollTop = 0;
+    let isAtBottom = false;
+    
+    function handleScroll() {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollBottom = scrollTop + windowHeight;
+      
+      // Only check for bottom if we've scrolled past the top (to avoid false positives on initial load)
+      // Also ensure document is tall enough to actually scroll
+      const hasScrolled = scrollTop > 10;
+      const canScroll = documentHeight > windowHeight + 20;
+      
+      // Check if at bottom of page (with 10px threshold for better detection)
+      const atBottom = canScroll && hasScrolled && scrollBottom >= documentHeight - 10;
+      
+      if (atBottom && !isAtBottom) {
+        // Reached bottom - translate down (hide)
+        stickyAtc.classList.add('translate-down');
+        isAtBottom = true;
+      } else if (!atBottom && isAtBottom) {
+        // Scrolled back up from bottom - translate back (show)
+        stickyAtc.classList.remove('translate-down');
+        isAtBottom = false;
+      }
+      
+      lastScrollTop = scrollTop;
+    }
+    
+    // Throttle scroll events for better performance
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(function() {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+    
+    // Initial check - wait for page to be fully loaded
+    if (document.readyState === 'complete') {
+      handleScroll();
+    } else {
+      window.addEventListener('load', function() {
+        handleScroll();
+      });
+    }
+  })();
+</script>
+{% endif %}
+{% schema %}
+{
+  "name": "Sticky ATC",
+  "tag": null,
+  "blocks": [
+    {
+        "type": "atlas_la_layout"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "min": 30,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Image width",
+      "default": 70
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "min": 30,
+      "max": 200,
+      "step": 5,
+      "unit": "px",
+      "label": "Image height",
+      "default": 70
+    },
+    {
+      "type": "header",
+      "content": "Background & colors"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_background",
+      "label": "Enable background",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#DF0C28",
+      "visible_if": "{{ block.settings.enable_background }}"
+    },
+    {
+      "type": "range",
+      "id": "background_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Background opacity",
+      "default": 100,
+      "visible_if": "{{ block.settings.enable_background }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "background_use_gradient",
+      "label": "Use gradient background",
+      "default": false,
+      "visible_if": "{{ block.settings.enable_background }}"
+    },
+    {
+      "type": "color_background",
+      "id": "background_gradient_color",
+      "label": "Gradient background",
+      "visible_if": "{{ block.settings.enable_background and block.settings.background_use_gradient }}",
+      "default": "linear-gradient(180deg, rgba(251, 51, 166, 1), rgba(127, 72, 176, 1) 50%, rgba(48, 145, 211, 1) 100%)"
+    },
+    {
+      "type": "header",
+      "content": "Border"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_border",
+      "label": "Enable border",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "border_width",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Border width",
+      "default": 1,
+      "visible_if": "{{ block.settings.enable_border }}"
+    },
+    {
+      "type": "select",
+      "id": "border_style",
+      "label": "Border style",
+      "options": [
+        {
+          "value": "solid",
+          "label": "Solid"
+        },
+        {
+          "value": "dashed",
+          "label": "Dashed"
+        },
+        {
+          "value": "dotted",
+          "label": "Dotted"
+        },
+        {
+          "value": "double",
+          "label": "Double"
+        }
+      ],
+      "default": "solid",
+      "visible_if": "{{ block.settings.enable_border }}"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border color",
+      "visible_if": "{{ block.settings.enable_border }}"
+    },
+    {
+      "type": "range",
+      "id": "border_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Border opacity",
+      "default": 100,
+      "visible_if": "{{ block.settings.enable_border }}"
+    },
+    {
+      "type": "header",
+      "content": "Corner radius"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Shadow"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_box_shadow",
+      "label": "Enable box shadow",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "shadow_x_offset",
+      "min": -50,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Shadow X offset",
+      "default": 0,
+      "visible_if": "{{ block.settings.enable_box_shadow }}"
+    },
+    {
+      "type": "range",
+      "id": "shadow_y_offset",
+      "min": -50,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Shadow Y offset",
+      "default": 10,
+      "visible_if": "{{ block.settings.enable_box_shadow }}"
+    },
+    {
+      "type": "range",
+      "id": "shadow_blur",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Shadow blur",
+      "default": 20,
+      "visible_if": "{{ block.settings.enable_box_shadow }}"
+    },
+    {
+      "type": "color",
+      "id": "shadow_color",
+      "label": "Shadow color",
+      "default": "#000000",
+      "visible_if": "{{ block.settings.enable_box_shadow }}"
+    },
+    {
+      "type": "range",
+      "id": "shadow_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Shadow opacity",
+      "default": 20,
+      "visible_if": "{{ block.settings.enable_box_shadow }}"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding left",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Padding right",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sticky ATC"
+    }
+  ]
+}
+{% endschema %}

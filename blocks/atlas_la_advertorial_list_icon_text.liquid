@@ -1,0 +1,1148 @@
+{% style %}
+.block-{{ block.id }} {
+    gap: {{ block.settings.gap_between_items_mobile }}px;
+    padding-top: {{ block.settings.padding_top_mobile }}px;
+    padding-bottom: {{ block.settings.padding_bottom_mobile }}px;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+.block-{{ block.id }} > li {
+  display: flex;
+  align-items: center;
+  {% if block.settings.icon_last %}
+   flex-direction: row-reverse;
+   justify-content: flex-end;
+  {% endif %}
+}
+  .block-{{ block.id }} > li {
+    gap: {{ block.settings.icon_text_gap_mobile }}px;
+    padding: {{ block.settings.icon_text_vertical_padding_mobile }}px {{ block.settings.icon_text_horizontal_padding_mobile }}px;
+    {% if block.settings.icon_text_have_background %}
+      background: rgba({{ block.settings.icon_text_background_color.red }}, {{ block.settings.icon_text_background_color.green }}, {{ block.settings.icon_text_background_color.blue }}, {{ block.settings.icon_text_background_opacity | divided_by: 100.0 }});  
+    {% endif %}
+  }
+  .block-{{ block.id }} .material-icon svg,
+  .block-{{ block.id }}  img {
+      width: {{ block.settings.icon_size_mobile }}px;
+      height: {{ block.settings.icon_size_mobile }}px;
+  }
+  .block-{{ block.id }}  img  {
+      object-fit: contain;
+  }
+  .block-{{ block.id }} .advertorial-list-icon-text-text {
+    font-size: {{ block.settings.font_size_mobile }}px;
+    color: {{ block.settings.text_color }};
+    line-height: 100%;
+  }
+  .block-{{ block.id }} .emoji-icon-1,
+  .block-{{ block.id }} .emoji-icon-2,
+  .block-{{ block.id }} .emoji-icon-3,
+  .block-{{ block.id }} .emoji-icon-4,
+  .block-{{ block.id }} .emoji-icon-5,
+  .block-{{ block.id }} .emoji-icon-6 {
+    font-size: {{ block.settings.icon_size_mobile }}px;
+  }
+  .block-{{ block.id }} .advertorial-list-icon-text-text strong {
+    font-weight: 700;
+    {% if block.settings.text_use_gradient %}
+      background: {% if block.settings.text_gradient_color != blank %}{{ block.settings.text_gradient_color }}{% else %}var(--color-highlighted-color){% endif %};
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    {% else %}
+      color: {{ block.settings.text_highlighted_color }};
+    {% endif %}
+  }
+  {% if block.settings.icon_1_have_custom_text_color %}
+    .block-{{ block.id }} > li:nth-child(1) .advertorial-list-icon-text-text {
+      color: {{ block.settings.icon_1_custom_text_color }};
+    }
+    .block-{{ block.id }} > li:nth-child(1) .advertorial-list-icon-text-text strong {
+      {% if block.settings.icon_1_have_custom_text_highlighted_gradient %}
+        background: {{ block.settings.icon_1_custom_text_highlighted_gradient_color }};
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      {% else %}
+        color: {{ block.settings.icon_1_custom_text_highlighted_color }};
+      {% endif %}
+    }
+  {% endif %}
+  {% if block.settings.icon_2_have_custom_text_color %}
+    .block-{{ block.id }} > li:nth-child(2) .advertorial-list-icon-text-text {
+      color: {{ block.settings.icon_2_custom_text_color }};
+    }
+    .block-{{ block.id }} > li:nth-child(2) .advertorial-list-icon-text-text strong {
+      {% if block.settings.icon_2_have_custom_text_highlighted_gradient %}
+        background: {{ block.settings.icon_2_custom_text_highlighted_gradient_color }};
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      {% else %}
+        color: {{ block.settings.icon_2_custom_text_highlighted_color }};
+      {% endif %}
+    }
+  {% endif %}
+  {% if block.settings.icon_3_have_custom_text_color %}
+    .block-{{ block.id }} > li:nth-child(3) .advertorial-list-icon-text-text {
+      color: {{ block.settings.icon_3_custom_text_color }};
+    }
+    .block-{{ block.id }} > li:nth-child(3) .advertorial-list-icon-text-text strong {
+      {% if block.settings.icon_3_have_custom_text_highlighted_gradient %}
+        background: {{ block.settings.icon_3_custom_text_highlighted_gradient_color }};
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      {% else %}
+        color: {{ block.settings.icon_3_custom_text_highlighted_color }};
+      {% endif %}
+    }
+  {% endif %}
+  {% if block.settings.icon_4_have_custom_text_color %}
+    .block-{{ block.id }} > li:nth-child(4) .advertorial-list-icon-text-text {
+      color: {{ block.settings.icon_4_custom_text_color }};
+    }
+    .block-{{ block.id }} > li:nth-child(4) .advertorial-list-icon-text-text strong {
+      {% if block.settings.icon_4_have_custom_text_highlighted_gradient %}
+        background: {{ block.settings.icon_4_custom_text_highlighted_gradient_color }};
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      {% else %}
+        color: {{ block.settings.icon_4_custom_text_highlighted_color }};
+      {% endif %}
+    }
+  {% endif %}
+  {% if block.settings.icon_5_have_custom_text_color %}
+    .block-{{ block.id }} > li:nth-child(5) .advertorial-list-icon-text-text {
+      color: {{ block.settings.icon_5_custom_text_color }};
+    }
+    .block-{{ block.id }} > li:nth-child(5) .advertorial-list-icon-text-text strong {
+      {% if block.settings.icon_5_have_custom_text_highlighted_gradient %}
+        background: {{ block.settings.icon_5_custom_text_highlighted_gradient_color }};
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      {% else %}
+        color: {{ block.settings.icon_5_custom_text_highlighted_color }};
+      {% endif %}
+    }
+  {% endif %}
+  {% if block.settings.icon_6_have_custom_text_color %}
+    .block-{{ block.id }} > li:nth-child(6) .advertorial-list-icon-text-text {
+      color: {{ block.settings.icon_6_custom_text_color }};
+    }
+    .block-{{ block.id }} > li:nth-child(6) .advertorial-list-icon-text-text strong {
+      {% if block.settings.icon_6_have_custom_text_highlighted_gradient %}
+        background: {{ block.settings.icon_6_custom_text_highlighted_gradient_color }};
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      {% else %}
+        color: {{ block.settings.icon_6_custom_text_highlighted_color }};
+      {% endif %}
+    }
+  {% endif %}
+  @media screen and (min-width: 1025px) {
+    .block-{{ block.id }} {
+      gap: {{ block.settings.gap_between_items }}px;
+      padding-top: {{ block.settings.padding_top }}px;
+      padding-bottom: {{ block.settings.padding_bottom }}px;
+    }
+    .block-{{ block.id }} > li {
+      gap: {{ block.settings.icon_text_gap }}px;
+      padding: {{ block.settings.icon_text_vertical_padding }}px {{ block.settings.icon_text_horizontal_padding }}px;
+    }
+    .block-{{ block.id }} .material-icon svg,
+    .block-{{ block.id }}  img {
+      width: {{ block.settings.icon_size }}px;
+      height: {{ block.settings.icon_size }}px;
+    }
+    .block-{{ block.id }} .advertorial-list-icon-text-text {
+      font-size: {{ block.settings.font_size }}px;
+    }
+    .block-{{ block.id }} .emoji-icon-1,
+    .block-{{ block.id }} .emoji-icon-2,
+    .block-{{ block.id }} .emoji-icon-3,
+    .block-{{ block.id }} .emoji-icon-4,
+    .block-{{ block.id }} .emoji-icon-5,
+    .block-{{ block.id }} .emoji-icon-6 {
+      font-size: {{ block.settings.icon_size }}px;
+    }
+  }
+{% endstyle %}
+<ul class="advertorial-list-icon-text block-{{ block.id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.text_1 != blank %}
+    <li {% if block.settings.icon_1_have_background %}style="background: rgba({{ block.settings.icon_1_background_color.red }}, {{ block.settings.icon_1_background_color.green }}, {{ block.settings.icon_1_background_color.blue }}, {{ block.settings.icon_1_custom_background_opacity | divided_by: 100.0 }});"{% endif %}>
+      {% if block.settings.icon_1 != blank %}
+        {% style %}
+          .block-{{ block.id }} > li:nth-child(1) .material-icon svg {
+            fill: {{ block.settings.icon_color_1 }};
+          }
+        {% endstyle %}
+        <span class="material-icon material-symbols-outlined notranslate" style="display: flex;">
+          {{ block.settings.icon_1 }}
+        </span>
+      {% elsif block.settings.icon_image_1 != blank %}
+        <img
+          src="{{ block.settings.icon_image_1 | image_url }}"
+          width="64"
+          height="64"
+          alt="{{ block.settings.text_1 }}"
+        >
+      {% elsif block.settings.emoji_image_1 != blank %}
+        <span class="emoji-icon-1" style="display: flex;">
+          {{ block.settings.emoji_image_1 }}
+        </span>
+      {% endif %}
+      <div class="advertorial-list-icon-text-text">
+        {{ block.settings.text_1 }}
+      </div>
+    </li>
+  {% endif %}
+  {% if block.settings.text_2 != blank %}
+    <li {% if block.settings.icon_2_have_background %}style="background: rgba({{ block.settings.icon_2_background_color.red }}, {{ block.settings.icon_2_background_color.green }}, {{ block.settings.icon_2_background_color.blue }}, {{ block.settings.icon_2_custom_background_opacity | divided_by: 100.0 }});"{% endif %}>
+      {% if block.settings.icon_2 != blank %}
+        {% style %}
+          .block-{{ block.id }} > li:nth-child(2) .material-icon svg {
+            fill: {{ block.settings.icon_color_2 }};
+          }
+        {% endstyle %}
+        <span class="material-icon material-symbols-outlined notranslate" style="display: flex;">
+          {{ block.settings.icon_2 }}
+        </span>
+      {% elsif block.settings.icon_image_2 != blank %}
+        <img
+          src="{{ block.settings.icon_image_2 | image_url }}"
+          width="64"
+          height="64"
+          alt="{{ block.settings.text_2 }}"
+        >
+      {% elsif block.settings.emoji_image_2 != blank %}
+        <span class="emoji-icon-2" style="display: flex;">
+          {{ block.settings.emoji_image_2 }}
+        </span>
+      {% endif %}
+      <div class="advertorial-list-icon-text-text">
+        {{ block.settings.text_2 }}
+      </div>
+    </li>
+  {% endif %}
+  {% if block.settings.text_3 != blank %}
+    <li {% if block.settings.icon_3_have_background %}style="background: rgba({{ block.settings.icon_3_background_color.red }}, {{ block.settings.icon_3_background_color.green }}, {{ block.settings.icon_3_background_color.blue }}, {{ block.settings.icon_3_custom_background_opacity | divided_by: 100.0 }});"{% endif %}>
+      {% if block.settings.icon_3 != blank %}
+        {% style %}
+          .block-{{ block.id }} > li:nth-child(3) .material-icon svg {
+            fill: {{ block.settings.icon_color_3 }};
+          }
+        {% endstyle %}
+        <span class="material-icon material-symbols-outlined notranslate" style="display: flex;">
+          {{ block.settings.icon_3 }}
+        </span>
+      {% elsif block.settings.icon_image_3 != blank %}
+        <img
+          src="{{ block.settings.icon_image_3 | image_url }}"
+          width="64"
+          height="64"
+          alt="{{ block.settings.text_3 }}"
+        >
+      {% elsif block.settings.emoji_image_3 != blank %}
+        <span class="emoji-icon-3" style="display: flex;">
+          {{ block.settings.emoji_image_3 }}
+        </span>
+      {% endif %}
+      <div class="advertorial-list-icon-text-text">
+        {{ block.settings.text_3 }}
+      </div>
+    </li>
+  {% endif %}
+  {% if block.settings.text_4 != blank %}
+    <li {% if block.settings.icon_4_have_background %}style="background: rgba({{ block.settings.icon_4_background_color.red }}, {{ block.settings.icon_4_background_color.green }}, {{ block.settings.icon_4_background_color.blue }}, {{ block.settings.icon_4_custom_background_opacity | divided_by: 100.0 }});"{% endif %}>
+      {% if block.settings.icon_4 != blank %}
+        {% style %}
+          .block-{{ block.id }} > li:nth-child(4) .material-icon svg {
+            fill: {{ block.settings.icon_color_4 }};
+          }
+        {% endstyle %}
+        <span class="material-icon material-symbols-outlined notranslate" style="display: flex;">
+          {{ block.settings.icon_4 }}
+        </span>
+      {% elsif block.settings.icon_image_4 != blank %}
+        <img
+          src="{{ block.settings.icon_image_4 | image_url }}"
+          width="64"
+          height="64"
+          alt="{{ block.settings.text_4 }}"
+        >
+      {% elsif block.settings.emoji_image_4 != blank %}
+        <span class="emoji-icon-4" style="display: flex;">
+          {{ block.settings.emoji_image_4 }}
+        </span>
+      {% endif %}
+      <div class="advertorial-list-icon-text-text">
+        {{ block.settings.text_4 }}
+      </div>
+    </li>
+  {% endif %}
+  {% if block.settings.text_5 != blank %}
+    <li {% if block.settings.icon_5_have_background %}style="background: rgba({{ block.settings.icon_5_background_color.red }}, {{ block.settings.icon_5_background_color.green }}, {{ block.settings.icon_5_background_color.blue }}, {{ block.settings.icon_5_custom_background_opacity | divided_by: 100.0 }});"{% endif %}>
+      {% if block.settings.icon_5 != blank %}
+        {% style %}
+          .block-{{ block.id }} > li:nth-child(5) .material-icon svg {
+            fill: {{ block.settings.icon_color_5 }};
+          }
+        {% endstyle %}
+        <span class="material-icon material-symbols-outlined notranslate" style="display: flex;">
+          {{ block.settings.icon_5 }}
+        </span>
+      {% elsif block.settings.icon_image_5 != blank %}
+        <img
+          src="{{ block.settings.icon_image_5 | image_url }}"
+          width="64"
+          height="64"
+          alt="{{ block.settings.text_5 }}"
+        >
+      {% elsif block.settings.emoji_image_5 != blank %}
+        <span class="emoji-icon-5" style="display: flex;">
+          {{ block.settings.emoji_image_5 }}
+        </span>
+      {% endif %}
+      <div class="advertorial-list-icon-text-text">
+        {{ block.settings.text_5 }}
+      </div>
+    </li>
+  {% endif %}
+  {% if block.settings.text_6 != blank %}
+    <li {% if block.settings.icon_6_have_background %}style="background: rgba({{ block.settings.icon_6_background_color.red }}, {{ block.settings.icon_6_background_color.green }}, {{ block.settings.icon_6_background_color.blue }}, {{ block.settings.icon_6_custom_background_opacity | divided_by: 100.0 }});"{% endif %}>
+      {% if block.settings.icon_6 != blank %}
+        {% style %}
+          .block-{{ block.id }} > li:nth-child(6) .material-icon svg {
+            fill: {{ block.settings.icon_color_6 }};
+          }
+        {% endstyle %}
+        <span class="material-icon material-symbols-outlined notranslate" style="display: flex;">
+          {{ block.settings.icon_6 }}
+        </span>
+      {% elsif block.settings.icon_image_6 != blank %}
+        <img
+          src="{{ block.settings.icon_image_6 | image_url }}"
+          width="64"
+          height="64"
+          alt="{{ block.settings.text_6 }}"
+        >
+      {% elsif block.settings.emoji_image_6 != blank %}
+        <span class="emoji-icon-6" style="display: flex;">
+          {{ block.settings.emoji_image_6 }}
+        </span>
+      {% endif %}
+      <div class="advertorial-list-icon-text-text">
+        {{ block.settings.text_6 }}
+      </div>
+    </li>
+  {% endif %}
+</ul>
+{% schema %}
+{
+  "name": "List icon & text",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Icon & text 1"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_1_have_custom_text_color",
+        "label": "Icon have custom text color",
+        "default": false
+    },
+    {
+        "type": "color",
+        "id": "icon_1_custom_text_color",
+        "label": "Icon custom text color",
+        "default": "#1f1f1f",
+        "visible_if": "{{ block.settings.icon_1_have_custom_text_color }}"
+    },
+    {
+        "type": "color",
+        "id": "icon_1_custom_text_highlighted_color",
+        "label": "Icon custom text highlighted color",
+        "default": "#1f1f1f",
+        "visible_if": "{{ block.settings.icon_1_have_custom_text_color }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_1_have_custom_text_highlighted_gradient",
+        "label": "Icon have custom text highlighted gradient",
+        "default": false,
+        "visible_if": "{{ block.settings.icon_1_have_custom_text_color }}"
+    },
+    {
+        "type": "color_background",
+        "id": "icon_1_custom_text_highlighted_gradient_color",
+        "label": "Icon custom text highlighted gradient color",
+        "default": "linear-gradient(136deg, rgba(10, 234, 237, 1) 11%, rgba(250, 13, 253, 1) 84%)",
+        "visible_if": "{{ block.settings.icon_1_have_custom_text_color }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_1_have_background",
+        "label": "Icon have custom background",
+        "default": false
+    },
+    {
+      "type": "color",
+      "id": "icon_1_background_color",
+      "label": "Icon background color",
+      "default": "#ffffff",
+      "visible_if": "{{ block.settings.icon_1_have_background }}"
+    },
+    {
+      "type": "range",
+      "id": "icon_1_custom_background_opacity",
+      "label": "Icon background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.icon_1_have_background }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text_1",
+      "label": "Text 1"
+    },
+    {
+      "type": "textarea",
+      "id": "icon_1",
+      "label": "Icon",
+      "default": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\" width=\"24px\" fill=\"#1f1f1f\"><path d=\"m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\"/></svg>",
+      "info": "t:blocks._bullet_point_benefits_list.settings.icon.info"
+    },
+    {
+      "type": "color",
+      "id": "icon_color_1",
+      "label": "Icon color",
+      "default": "#1f1f1f",
+      "visible_if": "{{ block.settings.icon_1 != blank }}"
+    },
+    {
+        "type": "inline_richtext",
+        "id": "emoji_image_1",
+        "label": "Emoji as icon",
+        "default": "👍"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image_1",
+      "label": "Custom image"
+    },
+    {
+      "type": "header",
+      "content": "Icon & text 2"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_2_have_custom_text_color",
+        "label": "Icon have custom text color",
+        "default": false
+    },
+    {
+        "type": "color",
+        "id": "icon_2_custom_text_color",
+        "label": "Icon custom text color",
+        "default": "#1f1f1f",
+        "visible_if": "{{ block.settings.icon_2_have_custom_text_color }}"
+    },
+    {
+        "type": "color",
+        "id": "icon_2_custom_text_highlighted_color",
+        "label": "Icon custom text highlighted color",
+        "default": "#1f1f1f",
+        "visible_if": "{{ block.settings.icon_2_have_custom_text_color }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_2_have_custom_text_highlighted_gradient",
+        "label": "Icon have custom text highlighted gradient",
+        "default": false,
+        "visible_if": "{{ block.settings.icon_2_have_custom_text_color }}"
+    },
+    {
+        "type": "color_background",
+        "id": "icon_2_custom_text_highlighted_gradient_color",
+        "label": "Icon custom text highlighted gradient color",
+        "default": "linear-gradient(136deg, rgba(10, 234, 237, 1) 11%, rgba(250, 13, 253, 1) 84%)",
+        "visible_if": "{{ block.settings.icon_2_have_custom_text_color }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_2_have_background",
+        "label": "Icon have custom background",
+        "default": false
+    },
+    {
+      "type": "color",
+      "id": "icon_2_background_color",
+      "label": "Icon background color",
+      "default": "#ffffff",
+      "visible_if": "{{ block.settings.icon_2_have_background }}"
+    },
+    {
+      "type": "range",
+      "id": "icon_2_custom_background_opacity",
+      "label": "Icon background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.icon_2_have_background }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text_2",
+      "label": "Text 2"
+    },
+    {
+      "type": "textarea",
+      "id": "icon_2",
+      "label": "Icon",
+      "default": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\" width=\"24px\" fill=\"#1f1f1f\"><path d=\"m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\"/></svg>",
+      "info": "t:blocks._bullet_point_benefits_list.settings.icon.info"
+    },
+    {
+      "type": "color",
+      "id": "icon_color_2",
+      "label": "Icon color",
+      "default": "#1f1f1f",
+      "visible_if": "{{ block.settings.icon_2 != blank }}"
+    },
+    {
+        "type": "inline_richtext",
+        "id": "emoji_image_2",
+        "label": "Emoji as icon",
+        "default": "👍"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image_2",
+      "label": "Custom image"
+    },
+    {
+      "type": "header",
+      "content": "Icon & text 3"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_3_have_custom_text_color",
+        "label": "Icon have custom text color",
+        "default": false
+    },
+    {
+        "type": "color",
+        "id": "icon_3_custom_text_color",
+        "label": "Icon custom text color",
+        "default": "#1f1f1f",
+        "visible_if": "{{ block.settings.icon_3_have_custom_text_color }}"
+    },
+    {
+        "type": "color",
+        "id": "icon_3_custom_text_highlighted_color",
+        "label": "Icon custom text highlighted color",
+        "default": "#1f1f1f",
+        "visible_if": "{{ block.settings.icon_3_have_custom_text_color }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_3_have_custom_text_highlighted_gradient",
+        "label": "Icon have custom text highlighted gradient",
+        "default": false,
+        "visible_if": "{{ block.settings.icon_3_have_custom_text_color }}"
+    },
+    {
+        "type": "color_background",
+        "id": "icon_3_custom_text_highlighted_gradient_color",
+        "label": "Icon custom text highlighted gradient color",
+        "default": "linear-gradient(136deg, rgba(10, 234, 237, 1) 11%, rgba(250, 13, 253, 1) 84%)",
+        "visible_if": "{{ block.settings.icon_3_have_custom_text_color }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_3_have_background",
+        "label": "Icon have custom background",
+        "default": false
+    },
+    {
+      "type": "color",
+      "id": "icon_3_background_color",
+      "label": "Icon background color",
+      "default": "#ffffff",
+      "visible_if": "{{ block.settings.icon_3_have_background }}"
+    },
+    {
+      "type": "range",
+      "id": "icon_3_custom_background_opacity",
+      "label": "Icon background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.icon_3_have_background }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text_3",
+      "label": "Text 3"
+    },
+    {
+      "type": "textarea",
+      "id": "icon_3",
+      "label": "Icon",
+      "default": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\" width=\"24px\" fill=\"#1f1f1f\"><path d=\"m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\"/></svg>",
+      "info": "t:blocks._bullet_point_benefits_list.settings.icon.info"
+    },
+    {
+      "type": "color",
+      "id": "icon_color_3",
+      "label": "Icon color",
+      "default": "#1f1f1f",
+      "visible_if": "{{ block.settings.icon_3 != blank }}"
+    },
+    {
+        "type": "inline_richtext",
+        "id": "emoji_image_3",
+        "label": "Emoji as icon",
+        "default": "👍"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image_3",
+      "label": "Custom image"
+    },
+    {
+      "type": "header",
+      "content": "Icon & text 4"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_4_have_custom_text_color",
+        "label": "Icon have custom text color",
+        "default": false
+    },
+    {
+        "type": "color",
+        "id": "icon_4_custom_text_color",
+        "label": "Icon custom text color",
+        "default": "#1f1f1f",
+        "visible_if": "{{ block.settings.icon_4_have_custom_text_color }}"
+    },
+    {
+        "type": "color",
+        "id": "icon_4_custom_text_highlighted_color",
+        "label": "Icon custom text highlighted color",
+        "default": "#1f1f1f",
+        "visible_if": "{{ block.settings.icon_4_have_custom_text_color }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_4_have_custom_text_highlighted_gradient",
+        "label": "Icon have custom text highlighted gradient",
+        "default": false,
+        "visible_if": "{{ block.settings.icon_4_have_custom_text_color }}"
+    },
+    {
+        "type": "color_background",
+        "id": "icon_4_custom_text_highlighted_gradient_color",
+        "label": "Icon custom text highlighted gradient color",
+        "default": "linear-gradient(136deg, rgba(10, 234, 237, 1) 11%, rgba(250, 13, 253, 1) 84%)",
+        "visible_if": "{{ block.settings.icon_4_have_custom_text_color }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_4_have_background",
+        "label": "Icon have custom background",
+        "default": false
+    },
+    {
+      "type": "color",
+      "id": "icon_4_background_color",
+      "label": "Icon background color",
+      "default": "#ffffff",
+      "visible_if": "{{ block.settings.icon_4_have_background }}"
+    },
+    {
+      "type": "range",
+      "id": "icon_4_custom_background_opacity",
+      "label": "Icon background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.icon_4_have_background }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text_4",
+      "label": "Text 4"
+    },
+    {
+      "type": "textarea",
+      "id": "icon_4",
+      "label": "Icon",
+      "default": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\" width=\"24px\" fill=\"#1f1f1f\"><path d=\"m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\"/></svg>",
+      "info": "t:blocks._bullet_point_benefits_list.settings.icon.info"
+    },
+    {
+      "type": "color",
+      "id": "icon_color_4",
+      "label": "Icon color",
+      "default": "#1f1f1f",
+      "visible_if": "{{ block.settings.icon_4 != blank }}"
+    },
+    {
+        "type": "inline_richtext",
+        "id": "emoji_image_4",
+        "label": "Emoji as icon",
+        "default": "👍"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image_4",
+      "label": "Custom image"
+    },
+    {
+      "type": "header",
+      "content": "Icon & text 5"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_5_have_custom_text_color",
+        "label": "Icon have custom text color",
+        "default": false
+    },
+    {
+        "type": "color",
+        "id": "icon_5_custom_text_color",
+        "label": "Icon custom text color",
+        "default": "#1f1f1f",
+        "visible_if": "{{ block.settings.icon_5_have_custom_text_color }}"
+    },
+    {
+        "type": "color",
+        "id": "icon_5_custom_text_highlighted_color",
+        "label": "Icon custom text highlighted color",
+        "default": "#1f1f1f",
+        "visible_if": "{{ block.settings.icon_5_have_custom_text_color }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_5_have_custom_text_highlighted_gradient",
+        "label": "Icon have custom text highlighted gradient",
+        "default": false,
+        "visible_if": "{{ block.settings.icon_5_have_custom_text_color }}"
+    },
+    {
+        "type": "color_background",
+        "id": "icon_5_custom_text_highlighted_gradient_color",
+        "label": "Icon custom text highlighted gradient color",
+        "default": "linear-gradient(136deg, rgba(10, 234, 237, 1) 11%, rgba(250, 13, 253, 1) 84%)",
+        "visible_if": "{{ block.settings.icon_5_have_custom_text_color }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_5_have_background",
+        "label": "Icon have custom background",
+        "default": false
+    },
+    {
+      "type": "color",
+      "id": "icon_5_background_color",
+      "label": "Icon background color",
+      "default": "#ffffff",
+      "visible_if": "{{ block.settings.icon_5_have_background }}"
+    },
+    {
+      "type": "range",
+      "id": "icon_5_custom_background_opacity",
+      "label": "Icon background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.icon_5_have_background }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text_5",
+      "label": "Text 5"
+    },
+    {
+      "type": "textarea",
+      "id": "icon_5",
+      "label": "Icon",
+      "default": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\" width=\"24px\" fill=\"#1f1f1f\"><path d=\"m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\"/></svg>",
+      "info": "t:blocks._bullet_point_benefits_list.settings.icon.info"
+    },
+    {
+      "type": "color",
+      "id": "icon_color_5",
+      "label": "Icon color",
+      "default": "#1f1f1f",
+      "visible_if": "{{ block.settings.icon_5 != blank }}"
+    },
+    {
+        "type": "inline_richtext",
+        "id": "emoji_image_5",
+        "label": "Emoji as icon",
+        "default": "👍"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image_5",
+      "label": "Custom image"
+    },
+    {
+      "type": "header",
+      "content": "Icon & text 6"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_6_have_custom_text_color",
+        "label": "Icon have custom text color",
+        "default": false
+    },
+    {
+        "type": "color",
+        "id": "icon_6_custom_text_color",
+        "label": "Icon custom text color",
+        "default": "#1f1f1f",
+        "visible_if": "{{ block.settings.icon_6_have_custom_text_color }}"
+    },
+    {
+        "type": "color",
+        "id": "icon_6_custom_text_highlighted_color",
+        "label": "Icon custom text highlighted color",
+        "default": "#1f1f1f",
+        "visible_if": "{{ block.settings.icon_6_have_custom_text_color }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_6_have_custom_text_highlighted_gradient",
+        "label": "Icon have custom text highlighted gradient",
+        "default": false,
+        "visible_if": "{{ block.settings.icon_6_have_custom_text_color }}"
+    },
+    {
+        "type": "color_background",
+        "id": "icon_6_custom_text_highlighted_gradient_color",
+        "label": "Icon custom text highlighted gradient color",
+        "default": "linear-gradient(136deg, rgba(10, 234, 237, 1) 11%, rgba(250, 13, 253, 1) 84%)",
+        "visible_if": "{{ block.settings.icon_6_have_custom_text_color }}"
+    },
+    {
+        "type": "checkbox",
+        "id": "icon_6_have_background",
+        "label": "Icon have custom background",
+        "default": false
+    },
+    {
+      "type": "color",
+      "id": "icon_6_background_color",
+      "label": "Icon background color",
+      "default": "#ffffff",
+      "visible_if": "{{ block.settings.icon_6_have_background }}"
+    },
+    {
+      "type": "range",
+      "id": "icon_6_custom_background_opacity",
+      "label": "Icon background opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.icon_6_have_background }}"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "text_6",
+      "label": "Text 6"
+    },
+    {
+      "type": "textarea",
+      "id": "icon_6",
+      "label": "Icon",
+      "default": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\" width=\"24px\" fill=\"#1f1f1f\"><path d=\"m424-296 282-282-56-56-226 226-114-114-56 56 170 170Zm56 216q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z\"/></svg>",
+      "info": "t:blocks._bullet_point_benefits_list.settings.icon.info"
+    },
+    {
+      "type": "color",
+      "id": "icon_color_6",
+      "label": "Icon color",
+      "default": "#1f1f1f",
+      "visible_if": "{{ block.settings.icon_6 != blank }}"
+    },
+    {
+        "type": "inline_richtext",
+        "id": "emoji_image_6",
+        "label": "Emoji as icon",
+        "default": "👍"
+    },
+    {
+      "type": "image_picker",
+      "id": "icon_image_6",
+      "label": "Custom image"
+    },
+    {
+      "type": "header",
+      "content": "Layout & spacing"
+    },
+    {
+      "type": "checkbox",
+      "id": "icon_last",
+      "label": "Icon last",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "gap_between_items",
+      "label": "Desktop Gap between items",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "info": "Gap between items in the list"
+    },
+    {
+      "type": "range",
+      "id": "gap_between_items_mobile",
+      "label": "Mobile Gap between items",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0,
+      "info": "Gap between items in the list"
+    },
+    {
+        "type": "range",
+        "id": "icon_text_gap",
+        "label": "Desktop Icon & text gap",
+        "min": 0,
+        "max": 32,
+        "step": 1,
+        "unit": "px",
+        "default": 4
+      },
+      {
+        "type": "range",
+        "id": "icon_text_gap_mobile",
+        "label": "Mobile Icon & text gap",
+        "min": 0,
+        "max": 32,
+        "step": 1,
+        "unit": "px",
+        "default": 4
+      },
+      {
+        "type": "range",
+        "id": "icon_text_vertical_padding",
+        "label": "Desktop Icon & text vertical padding",
+        "min": 0,
+        "max": 32,
+        "step": 1,
+        "unit": "px",
+        "default": 8
+      },
+      {
+        "type": "range",
+        "id": "icon_text_vertical_padding_mobile",
+        "label": "Mobile Icon & text vertical padding",
+        "min": 0,
+        "max": 32,
+        "step": 1,
+        "unit": "px",
+        "default": 8
+      },
+      {
+        "type": "range",
+        "id": "icon_text_horizontal_padding",
+        "label": "Desktop Icon & text horizontal padding",
+        "min": 0,
+        "max": 32,
+        "step": 1,
+        "unit": "px",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "icon_text_horizontal_padding_mobile",
+        "label": "Mobile Icon & text horizontal padding",
+        "min": 0,
+        "max": 32,
+        "step": 1,
+        "unit": "px",
+        "default": 0
+      },
+      {
+        "type": "header",
+        "content": "Icon & text background"
+      },
+      {
+        "type": "checkbox",
+        "id": "icon_text_have_background",
+        "label": "Icon & text have background",
+        "default": false
+      },
+      {
+        "type": "color",
+        "id": "icon_text_background_color",
+        "label": "Icon & text background color",
+        "default": "#ffffff",
+        "visible_if": "{{ block.settings.icon_text_have_background }}"
+      },
+      {
+        "type": "range",
+        "id": "icon_text_background_opacity",
+        "label": "Icon & text background opacity",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "%",
+        "default": 100,
+        "visible_if": "{{ block.settings.icon_text_have_background }}"
+      },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Desktop Font size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "font_size_mobile",
+      "label": "Mobile Font size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#1f1f1f"
+    },
+    {
+      "type": "color",
+      "id": "text_highlighted_color",
+      "label": "Text highlighted color",
+      "default": "#1f1f1f"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_use_gradient",
+      "label": "Use gradient",
+      "default": false
+    },
+    {
+      "type": "color_background",
+      "id": "text_gradient_color",
+      "label": "Text gradient color",
+      "default": "linear-gradient(136deg, rgba(10, 234, 237, 1) 11%, rgba(250, 13, 253, 1) 84%)",
+      "visible_if": "{{ block.settings.text_use_gradient }}"
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Desktop padding top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Desktop padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile padding top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },  
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Icon"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Desktop Icon size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "label": "Mobile Icon size",
+      "min": 12,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    }
+  ],
+  "presets": [
+    {
+      "name": "List icon & text"
+    }
+  ]
+}
+{% endschema %}

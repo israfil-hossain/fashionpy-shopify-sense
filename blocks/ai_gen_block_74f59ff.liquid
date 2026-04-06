@@ -1,0 +1,603 @@
+{% doc %}
+  @prompt
+    Create a modern product card for a collection page that matches this design: clean white background, product image takes up the top ~60% of the card, a discount badge (e.g. "-33%") in the top-left corner with a dark red/maroon background and white text, product title in bold centered below the image, pricing shown with original price struck through in gray and sale price in red beside it prefixed with "From", a 5-star rating row with star icons and review count in parentheses, and a "View options" text link button centered at the bottom with an underline. The card has no visible border, minimal padding, and a modern minimal aesthetic.
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-product-card-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+  }
+
+  .ai-product-card-wrapper-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_background }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .ai-product-card-image-wrapper-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    padding-bottom: {{ block.settings.image_aspect_ratio }}%;
+    overflow: hidden;
+  }
+
+  .ai-product-card-image-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-product-card-image-placeholder-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-product-card-image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ai-product-card-badge-{{ ai_gen_id }} {
+    position: absolute;
+    top: {{ block.settings.badge_offset }}px;
+    left: {{ block.settings.badge_offset }}px;
+    background-color: {{ block.settings.badge_background }};
+    color: {{ block.settings.badge_text_color }};
+    padding: {{ block.settings.badge_padding_vertical }}px {{ block.settings.badge_padding_horizontal }}px;
+    font-size: {{ block.settings.badge_font_size }}px;
+    font-weight: 600;
+    border-radius: {{ block.settings.badge_border_radius }}px;
+    z-index: 2;
+  }
+
+  .ai-product-card-content-{{ ai_gen_id }} {
+    padding: {{ block.settings.content_padding }}px;
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.content_gap }}px;
+    flex-grow: 1;
+  }
+
+  .ai-product-card-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_font_size }}px;
+    font-weight: 700;
+    color: {{ block.settings.title_color }};
+    text-align: center;
+    margin: 0;
+    line-height: 1.3;
+  }
+
+  .ai-product-card-price-wrapper-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .ai-product-card-price-label-{{ ai_gen_id }} {
+    font-size: {{ block.settings.price_font_size }}px;
+    color: {{ block.settings.price_color }};
+  }
+
+  .ai-product-card-price-compare-{{ ai_gen_id }} {
+    font-size: {{ block.settings.price_font_size }}px;
+    color: {{ block.settings.compare_price_color }};
+    text-decoration: line-through;
+  }
+
+  .ai-product-card-price-sale-{{ ai_gen_id }} {
+    font-size: {{ block.settings.price_font_size }}px;
+    color: {{ block.settings.sale_price_color }};
+    font-weight: 600;
+  }
+
+  .ai-product-card-rating-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .ai-product-card-stars-{{ ai_gen_id }} {
+    display: flex;
+    gap: 2px;
+  }
+
+  .ai-product-card-star-{{ ai_gen_id }} {
+    width: {{ block.settings.star_size }}px;
+    height: {{ block.settings.star_size }}px;
+    fill: {{ block.settings.star_color }};
+  }
+
+  .ai-product-card-review-count-{{ ai_gen_id }} {
+    font-size: {{ block.settings.review_count_font_size }}px;
+    color: {{ block.settings.review_count_color }};
+  }
+
+  .ai-product-card-link-{{ ai_gen_id }} {
+    text-align: center;
+    margin-top: auto;
+  }
+
+  .ai-product-card-link-button-{{ ai_gen_id }} {
+    font-size: {{ block.settings.link_font_size }}px;
+    color: {{ block.settings.link_color }};
+    text-decoration: underline;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .ai-product-card-link-button-{{ ai_gen_id }}:hover {
+    color: {{ block.settings.link_hover_color }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-product-card-{{ ai_gen_id }} {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<product-card-{{ ai_gen_id }}
+  class="ai-product-card-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-product-card-wrapper-{{ ai_gen_id }}">
+    <div class="ai-product-card-image-wrapper-{{ ai_gen_id }}">
+      {% if block.settings.product %}
+        {% if block.settings.product.featured_image %}
+          <img
+            src="{{ block.settings.product.featured_image | image_url: width: 800 }}"
+            alt="{{ block.settings.product.featured_image.alt | escape }}"
+            loading="lazy"
+            width="{{ block.settings.product.featured_image.width }}"
+            height="{{ block.settings.product.featured_image.height }}"
+            class="ai-product-card-image-{{ ai_gen_id }}"
+          >
+        {% else %}
+          <div class="ai-product-card-image-placeholder-{{ ai_gen_id }}">
+            {{ 'product-1' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
+
+        {% if block.settings.show_badge and block.settings.product.compare_at_price > block.settings.product.price %}
+          {% assign discount_percent = block.settings.product.compare_at_price | minus: block.settings.product.price | times: 100 | divided_by: block.settings.product.compare_at_price %}
+          <div class="ai-product-card-badge-{{ ai_gen_id }}">
+            -{{ discount_percent }}%
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="ai-product-card-image-placeholder-{{ ai_gen_id }}">
+          {{ 'product-1' | placeholder_svg_tag }}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="ai-product-card-content-{{ ai_gen_id }}">
+      {% if block.settings.product %}
+        <h3 class="ai-product-card-title-{{ ai_gen_id }}">
+          {{ block.settings.product.title }}
+        </h3>
+
+        <div class="ai-product-card-price-wrapper-{{ ai_gen_id }}">
+          {% if block.settings.show_from_label %}
+            <span class="ai-product-card-price-label-{{ ai_gen_id }}">From</span>
+          {% endif %}
+          {% if block.settings.product.compare_at_price > block.settings.product.price %}
+            <span class="ai-product-card-price-compare-{{ ai_gen_id }}">
+              {{ block.settings.product.compare_at_price | money }}
+            </span>
+          {% endif %}
+          <span class="ai-product-card-price-sale-{{ ai_gen_id }}">
+            {{ block.settings.product.price | money }}
+          </span>
+        </div>
+
+        {% if block.settings.show_rating %}
+          <div class="ai-product-card-rating-{{ ai_gen_id }}">
+            <div class="ai-product-card-stars-{{ ai_gen_id }}">
+              {% for i in (1..5) %}
+                <svg
+                  class="ai-product-card-star-{{ ai_gen_id }}"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              {% endfor %}
+            </div>
+            <span class="ai-product-card-review-count-{{ ai_gen_id }}">
+              ({{ block.settings.review_count }})
+            </span>
+          </div>
+        {% endif %}
+
+        <div class="ai-product-card-link-{{ ai_gen_id }}">
+          <a
+            href="{{ block.settings.product.url }}"
+            class="ai-product-card-link-button-{{ ai_gen_id }}"
+          >
+            {{ block.settings.link_text }}
+          </a>
+        </div>
+      {% else %}
+        <h3 class="ai-product-card-title-{{ ai_gen_id }}">
+          Product title
+        </h3>
+
+        <div class="ai-product-card-price-wrapper-{{ ai_gen_id }}">
+          {% if block.settings.show_from_label %}
+            <span class="ai-product-card-price-label-{{ ai_gen_id }}">From</span>
+          {% endif %}
+          <span class="ai-product-card-price-compare-{{ ai_gen_id }}">
+            $99.00
+          </span>
+          <span class="ai-product-card-price-sale-{{ ai_gen_id }}">
+            $66.00
+          </span>
+        </div>
+
+        {% if block.settings.show_rating %}
+          <div class="ai-product-card-rating-{{ ai_gen_id }}">
+            <div class="ai-product-card-stars-{{ ai_gen_id }}">
+              {% for i in (1..5) %}
+                <svg
+                  class="ai-product-card-star-{{ ai_gen_id }}"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                </svg>
+              {% endfor %}
+            </div>
+            <span class="ai-product-card-review-count-{{ ai_gen_id }}">
+              ({{ block.settings.review_count }})
+            </span>
+          </div>
+        {% endif %}
+
+        <div class="ai-product-card-link-{{ ai_gen_id }}">
+          <span class="ai-product-card-link-button-{{ ai_gen_id }}">
+            {{ block.settings.link_text }}
+          </span>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</product-card-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class ProductCard{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+      }
+    }
+
+    customElements.define('product-card-{{ ai_gen_id }}', ProductCard{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Product card",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "label": "Content padding",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "label": "Content gap",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Image"
+    },
+    {
+      "type": "range",
+      "id": "image_aspect_ratio",
+      "label": "Aspect ratio",
+      "min": 50,
+      "max": 150,
+      "step": 5,
+      "unit": "%",
+      "default": 100,
+      "info": "100% = square, 150% = portrait, 67% = landscape"
+    },
+    {
+      "type": "header",
+      "content": "Discount badge"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_badge",
+      "label": "Show discount badge",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "badge_background",
+      "label": "Background",
+      "default": "#8B1538"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "badge_padding_vertical",
+      "label": "Vertical padding",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "badge_padding_horizontal",
+      "label": "Horizontal padding",
+      "min": 4,
+      "max": 16,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "badge_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "badge_offset",
+      "label": "Offset from corner",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Title"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Price"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_from_label",
+      "label": "Show 'From' label",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Label color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "compare_price_color",
+      "label": "Compare price color",
+      "default": "#999999"
+    },
+    {
+      "type": "color",
+      "id": "sale_price_color",
+      "label": "Sale price color",
+      "default": "#D32F2F"
+    },
+    {
+      "type": "range",
+      "id": "price_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Rating"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show rating",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#FFB400"
+    },
+    {
+      "type": "range",
+      "id": "star_size",
+      "label": "Star size",
+      "min": 12,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "review_count",
+      "label": "Review count",
+      "min": 0,
+      "max": 1000,
+      "step": 10,
+      "default": 120
+    },
+    {
+      "type": "color",
+      "id": "review_count_color",
+      "label": "Review count color",
+      "default": "#666666"
+    },
+    {
+      "type": "range",
+      "id": "review_count_font_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Link button"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link text",
+      "default": "View options"
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "Hover color",
+      "default": "#666666"
+    },
+    {
+      "type": "range",
+      "id": "link_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product card"
+    }
+  ]
+}
+{% endschema %}

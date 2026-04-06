@@ -1,0 +1,119 @@
+{% style %}
+  
+  #shopify-section-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+  #shopify-section-{{ section.id }} .advertorial-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  #shopify-section-{{ section.id }} .advertorial__container {
+    display: flex;
+    width: 100%;
+  }
+  #shopify-section-{{ section.id }} .advertorial__content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  #shopify-section-{{ section.id }} .advertorial__content > * {
+    max-width: 60%;
+  }
+  #shopify-section-{{ section.id }} .advertorial__content > .advertorial-side-bar,
+  #shopify-section-{{ section.id }} .advertorial__content > .advertorial-side-bar-clone {
+    max-width: none;
+  }
+  @media screen and (max-width: 1024px) {
+    #shopify-section-{{ section.id }} .advertorial__content > * {
+      max-width: 100%;
+    }
+  }
+  #shopify-section-{{ section.id }} .page-width {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .page-width {
+      padding: 0 50px;
+    }
+  }
+{% endstyle %}
+<div class="advertorial-section">
+  <div class="advertorial__container page-width">
+    <div class="advertorial__content">
+      {% content_for 'blocks' %}
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Advertorial extra blocks",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "atlas_la_image",
+    },
+    {
+      "type": "atlas_la_text",
+    },
+    {
+      "type": "atlas_la_heading",
+    },
+    {
+      "type": "atlas_la_advertorial_content_group",
+    },
+    {
+      "type": "atlas_la_advertorial_list_icon_text",
+    },
+    {
+      "type": "atlas_la_advertorial_author",
+    },
+    {
+      "type": "atlas_la_advertorial_timeline_cards",
+    },
+    {
+      "type": "atlas_la_advertorial_review_cards",
+    },
+    {
+      "type": "atlas_la_advertorial_cta_button",
+    },
+    {
+      "type": "atlas_la_advertorial_timer",
+    }
+  ],
+  "presets": [
+    {
+      "name": "Advertorial extra blocks"
+    }
+  ]
+}
+{% endschema %}

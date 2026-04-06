@@ -1,0 +1,141 @@
+{% style %}
+  #shopify-section-{{ section.id }} .offer-banner {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    {% if section.settings.use_gradient_background %}
+      background: {{ section.settings.background_color_gradient }};
+    {% else %}
+      background: {{ section.settings.background_color }};
+    {% endif %}
+  }
+  #shopify-section-{{ section.id }} .offer-banner__inner {
+    width:fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: {{ section.settings.vertical_spacing }}px;
+    padding-bottom: {{ section.settings.vertical_spacing }}px;
+  }
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .offer-banner__inner {
+      padding-top: {{ section.settings.vertical_spacing_mobile }}px;
+      padding-bottom: {{ section.settings.vertical_spacing_mobile }}px;
+      flex-wrap: wrap;
+    }
+  }
+  body .shopify-section-group-header-group {
+    display: none !important;
+  }
+  body .shopify-section-group-footer-group {
+    display: none !important;
+  }
+  #shopify-section-{{ section.id }} .page-width {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+  @media screen and (min-width: 990px) {
+    #shopify-section-{{ section.id }} .page-width {
+      padding: 0 50px;
+    }
+  }
+{% endstyle %}
+<div class="offer-banner">
+  <div class="offer-banner__inner page-width">
+    {% content_for 'blocks' %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Offer banner",
+  "blocks": [
+    {
+      "type": "atlas_la_text"
+    },
+    {
+      "type": "atlas_la_timer"
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#1D1A2D",
+      "visible_if": "{{ section.settings.use_gradient_background == false }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "use_gradient_background",
+      "label": "Use gradient background",
+      "default": true
+    },
+    {
+      "type": "color_background",
+      "id": "background_color_gradient",
+      "label": "Gradient background color",
+      "default": "linear-gradient(90deg, #EE0979 0%, #FF6A00 100%)",
+      "visible_if": "{{ section.settings.use_gradient_background }}"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "vertical_spacing",
+      "label": "Desktop vertical spacing",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "vertical_spacing_mobile",
+      "label": "Mobile vertical spacing",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    
+  ]
+}
+{% endschema %}

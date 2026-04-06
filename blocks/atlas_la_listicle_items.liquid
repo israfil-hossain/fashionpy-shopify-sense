@@ -1,0 +1,724 @@
+{% liquid
+  assign overlay_color_start = block.settings.overlay_color_start | default: '#ee0c74'
+  assign overlay_color_end = block.settings.overlay_color_end | default: '#fe6802'
+  assign overlay_color_start_red = overlay_color_start | color_extract: 'red'
+  assign overlay_color_start_green = overlay_color_start | color_extract: 'green'
+  assign overlay_color_start_blue = overlay_color_start | color_extract: 'blue'
+  assign overlay_color_end_red = overlay_color_end | color_extract: 'red'
+  assign overlay_color_end_green = overlay_color_end | color_extract: 'green'
+  assign overlay_color_end_blue = overlay_color_end | color_extract: 'blue'
+  assign overlay_opacity_start_percent = block.settings.overlay_opacity_start | default: 50
+  assign overlay_opacity_end_percent = block.settings.overlay_opacity_end | default: 0
+  assign overlay_opacity_start = overlay_opacity_start_percent | times: 0.01
+  assign overlay_opacity_end = overlay_opacity_end_percent | times: 0.01
+
+  assign items_gap_desktop = block.settings.items_gap_desktop | default: block.settings.gap_between_items_desktop | default: 58
+  assign items_gap_mobile = block.settings.items_gap_mobile | default: block.settings.gap_between_items_mobile | default: 58
+  assign media_content_gap_desktop = block.settings.media_content_gap_desktop | default: block.settings.item_gap_desktop | default: 42
+  assign media_content_gap_mobile = block.settings.media_content_gap_mobile | default: block.settings.item_gap_mobile | default: 24
+  assign content_stack_gap_desktop = block.settings.content_stack_gap_desktop | default: block.settings.content_gap | default: 18
+%}
+{% style %}
+  .block-{{ block.id }} {
+    padding-top: {{ block.settings.padding_top }}px;
+    padding-bottom: {{ block.settings.padding_bottom }}px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-left: 0;
+    gap: {{ items_gap_desktop }}px;
+  }
+  .block-{{ block.id }} .listicle-item {
+    display: flex;
+    width: 100%;
+    gap: {{ media_content_gap_desktop }}px;
+  }
+  .block-{{ block.id }} .listicle-item__image {
+    flex: 1;
+    border-radius: {{ block.settings.image_border_radius }}px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    {% if block.settings.image_height_desktop == 'small' %}
+      height: 300px;
+    {% elsif block.settings.image_height_desktop == 'medium' %}
+      height: 400px;
+    {% elsif block.settings.image_height_desktop == 'large' %}
+      height: 500px;
+    {% endif %}
+  }
+  .block-{{ block.id }} .listicle-item__image:hover img {
+    transition: transform 0.5s ease-out;
+    transform: scale(1.05);
+  }
+  .block-{{ block.id }} .listicle-item__image img ,  
+  .block-{{ block.id }} .listicle-item__image svg {
+    transition: transform 0.5s ease-out;
+    width: 100%;
+    object-fit: cover;
+    height: auto;
+  }
+  .block-{{ block.id }} .listicle-item__image-overlay {
+    position: absolute;
+    top: 25%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(0deg, rgba({{ overlay_color_start_red }}, {{ overlay_color_start_green }}, {{ overlay_color_start_blue }}, {{ overlay_opacity_start }}) 0%, rgba({{ overlay_color_end_red }}, {{ overlay_color_end_green }}, {{ overlay_color_end_blue }}, {{ overlay_opacity_end }}) 101.76%);
+    z-index: 2;
+  }
+  .block-{{ block.id }} .listicle-item__image-badge {
+    position: absolute;
+    bottom: {{ block.settings.badge_bottom_offset_desktop }}px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: {{ block.settings.badge_background_color }};
+    border-radius: {{ block.settings.badge_border_radius }}px;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: {{ block.settings.badge_font_size_desktop }}px;
+    line-height: calc(100% + 8px);
+    padding: {{ block.settings.badge_padding_vertical }}px {{ block.settings.badge_padding_horizontal }}px;
+    color: {{ block.settings.badge_text_color }};
+    white-space: nowrap;
+  }
+  .block-{{ block.id }} .listicle-item__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: {{ content_stack_gap_desktop }}px;
+    height: 100%;
+    padding-top: 14px;
+  }
+  .block-{{ block.id }} .listicle-item__content p {
+    margin: 0;
+  }
+  .block-{{ block.id }} .listicle-item__content-title {
+    font-size: {{ block.settings.title_font_size }}px;
+    line-height: calc(100% + 12px);
+    color: {{ block.settings.title_color }};
+  }
+    .block-{{ block.id }} .listicle-item__content-title strong {
+  {% if block.settings.title_bolded_color_use_gradient %}
+    color: transparent;
+      background: {{ block.settings.title_bolded_color_gradient_color }};
+      -webkit-background-clip: text;
+      background-clip: text;
+    {% else %}
+      color: {{ block.settings.title_bolded_color }};
+    {% endif %}
+  }
+  .block-{{ block.id }} .listicle-item__content-title--mobile {
+    font-size: {{ block.settings.title_font_size_mobile }}px;
+    line-height: calc(100% + 12px);
+    color: {{ block.settings.title_color }};
+    display: none;
+  }
+  .block-{{ block.id }} .listicle-item__content-title--mobile p {
+    margin: 0;
+  }
+  .block-{{ block.id }} .listicle-item__content-text {
+    font-size: {{ block.settings.text_font_size }}px;
+    line-height: calc(100% + 12px);
+    color: {{ block.settings.text_color }};
+  }
+  .block-{{ block.id }} .listicle-item__content-text strong {
+    {% if block.settings.text_bolded_color_use_gradient %}
+      background: {{ block.settings.text_bolded_color_gradient_color }};
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    {% else %}
+      color: {{ block.settings.text_bolded_color }};
+    {% endif %}
+  }
+  .block-{{ block.id }} .listicle-item__content-title strong,
+  .block-{{ block.id }} .listicle-item__content-text strong,
+  .block-{{ block.id }} .listicle-item__content-title--mobile strong {
+    font-weight: 700;
+  }
+  .block-{{ block.id }} .listicle-item__content-text p {
+    margin: 0;
+  }
+  @media screen and (max-width: 768px) {
+    .block-{{ block.id }} {
+      padding-top: {{ block.settings.padding_top_mobile }}px;
+      padding-bottom: {{ block.settings.padding_bottom_mobile }}px;
+      gap: {{ items_gap_mobile }}px;
+    }
+    .block-{{ block.id }} .listicle-item__content-title--mobile {
+      display: block;
+    }
+    .block-{{ block.id }} .listicle-item__content-title {
+      display: none;
+    }
+    .block-{{ block.id }} .listicle-item__content {
+      flex:0;
+      padding-top: 0;
+    }
+    .block-{{ block.id }} .listicle-item__content-text {
+      font-size: {{ block.settings.text_font_size_mobile }}px;
+    }
+    .block-{{ block.id }} .listicle-item {
+      gap: {{ media_content_gap_mobile }}px;
+      flex-direction: column;
+    }
+    .block-{{ block.id }} .listicle-item__image {
+      width: 100%;
+      {% if block.settings.image_height_mobile == 'small' %}
+        max-height: 200px;
+        min-height: 200px;
+      {% elsif block.settings.image_height_mobile == 'medium' %}
+        max-height: 300px;
+        min-height: 300px;
+      {% elsif block.settings.image_height_mobile == 'large' %}
+        max-height: 400px;
+        min-height: 400px;
+      {% endif %}
+    }
+
+    .block-{{ block.id }} .listicle-item__image-badge {
+      bottom: {{ block.settings.badge_bottom_offset_mobile }}px;
+      font-size: {{ block.settings.badge_font_size_mobile }}px;
+    }
+
+  }
+{% endstyle %}
+{% assign listicle_item_indices = '1,2,3,4' | split: ',' %}
+<ul class="listicle-items block-{{ block.id }}" {{ block.shopify_attributes }}>
+  {% for idx in listicle_item_indices %}
+    {% assign image_key = 'image_' | append: idx %}
+    {% assign badge_key = 'badge_' | append: idx %}
+    {% assign title_key = 'title_' | append: idx %}
+    {% assign text_key = 'text_' | append: idx %}
+    {% assign image_setting = block.settings[image_key] %}
+    {% assign badge_setting = block.settings[badge_key] %}
+    {% assign title_setting = block.settings[title_key] %}
+    {% assign text_setting = block.settings[text_key] %}
+    {%  if image_setting == blank %}
+      {% continue %}
+    {% endif %}
+    <li class="listicle-item">
+      {% if title_setting != blank %}
+        <div class="listicle-item__content-title--mobile">
+            {{ title_setting }}
+        </div>
+      {% endif %}
+      <div class="listicle-item__image">
+          <img src="{{ image_setting | image_url: width: 800 }}" alt="{{ image_setting.alt | escape }}" width="800" height="800">
+          <div class="listicle-item__image-overlay"></div>
+          {% if badge_setting != blank %}
+            <div class="listicle-item__image-badge">
+                {{ badge_setting }}
+            </div>
+          {% endif %}
+      </div>
+      <div class="listicle-item__content">
+          {% if title_setting != blank %}
+            <div class="listicle-item__content-title">
+                {{ title_setting }}
+            </div>
+          {% endif %}
+          {% if text_setting != blank %}
+            <div class="listicle-item__content-text">
+                {{ text_setting }}
+            </div>
+          {% endif %}
+      </div>
+    </li>
+  {% endfor %}
+</ul>
+{% schema %}
+{
+  "name": "Listicle items",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Item 1 content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Item 1 image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "badge_1",
+      "label": "Item 1 badge",
+      "default": "Badge text"
+    },
+    {
+      "type": "richtext",
+      "id": "title_1",
+      "label": "Item 1 title",
+      "default": "<p>1. Title <strong>text</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text_1",
+      "label": "Item 1 text",
+      "default": "<p>Lorem ipsum <strong>dolor</strong> sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Item 2 content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Item 2 image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "badge_2",
+      "label": "Item 2 badge",
+      "default": "Badge text"
+    },
+    {
+      "type": "richtext",
+      "id": "title_2",
+      "label": "Item 2 title",
+      "default": "<p>2. Title <strong>text</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text_2",
+      "label": "Item 2 text",
+      "default": "<p>Lorem ipsum <strong>dolor</strong> sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Item 3 content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Item 3 image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "badge_3",
+      "label": "Item 3 badge",
+      "default": "Badge text"
+    },
+    {
+      "type": "richtext",
+      "id": "title_3",
+      "label": "Item 3 title",
+      "default": "<p>3. Title <strong>text</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text_3",
+      "label": "Item 3 text",
+      "default": "<p>Lorem ipsum <strong>dolor</strong> sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Item 4 content"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_4",
+      "label": "Item 4 image"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "badge_4",
+      "label": "Item 4 badge",
+      "default": "Badge text"
+    },
+    {
+      "type": "richtext",
+      "id": "title_4",
+      "label": "Item 4 title",
+      "default": "<p>4. Title <strong>text</strong></p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text_4",
+      "label": "Item 4 text",
+      "default": "<p>Lorem ipsum <strong>dolor</strong> sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout & spacing"
+    },
+    {
+      "type": "select",
+      "id": "image_height_desktop",
+      "label": "Desktop image height",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adapt"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "adapt"
+    },
+    {
+      "type": "select",
+      "id": "image_height_mobile",
+      "label": "Mobile image height",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adapt"
+        },
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "range",
+      "id": "items_gap_desktop",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop spacing between list items",
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "items_gap_mobile",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile spacing between list items",
+      "default": 58
+    },
+    {
+      "type": "range",
+      "id": "media_content_gap_desktop",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop media and content gap",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "media_content_gap_mobile",
+      "min": 0,
+      "max": 60,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile media and content gap",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "content_stack_gap_desktop",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop title and text gap",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Image border radius",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Badge styling"
+    },
+    {
+      "type": "range",
+      "id": "badge_bottom_offset_desktop",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Desktop badge bottom offset",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "badge_bottom_offset_mobile",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "unit": "px",
+      "label": "Mobile badge bottom offset",
+      "default": 30
+    },
+    {
+      "type": "color",
+      "id": "badge_background_color",
+      "label": "Badge background color",
+      "default": "#1d1d1d"
+    },
+    {
+      "type": "color",
+      "id": "badge_text_color",
+      "label": "Badge text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "badge_border_radius",
+      "min": 0,
+      "max": 300,
+      "step": 3,
+      "unit": "px",
+      "label": "Badge border radius",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size_desktop",
+      "min": 8,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop badge font size",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size_mobile",
+      "min": 8,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile badge font size",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "badge_padding_vertical",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge vertical padding",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "badge_padding_horizontal",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Badge horizontal padding",
+      "default": 22
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "title_font_size",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop title font size",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "title_font_size_mobile",
+      "min": 12,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile title font size",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#1d1d1d"
+    },
+    {
+      "type": "color",
+      "id": "title_bolded_color",
+      "label": "Title bolded color",
+      "default": "#1d1d1d"
+    },
+    {
+      "type": "checkbox",
+      "id": "title_bolded_color_use_gradient",
+      "label": "Title bolded color use gradient",
+      "default": false
+    },
+    {
+      "type": "color_background",
+      "id": "title_bolded_color_gradient_color",
+      "label": "Title bolded color gradient color",
+      "default": "linear-gradient(180deg, rgba(251, 51, 166, 1), rgba(127, 72, 176, 1) 50%, rgba(48, 145, 211, 1) 100%)"
+    },
+    {
+      "type": "range",
+      "id": "text_font_size",
+      "min": 10,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop text font size",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_font_size_mobile",
+      "min": 10,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile text font size",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#444444"
+    },
+    {
+      "type": "color",
+      "id": "text_bolded_color",
+      "label": "Text bolded color",
+      "default": "#444444"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_bolded_color_use_gradient",
+      "label": "Text bolded color use gradient",
+      "default": false
+    },
+    {
+      "type": "color_background",
+      "id": "text_bolded_color_gradient_color",
+      "label": "Text bolded color gradient color",
+      "default": "linear-gradient(180deg, rgba(251, 51, 166, 1), rgba(127, 72, 176, 1) 50%, rgba(48, 145, 211, 1) 100%)"
+    },
+    {
+      "type": "header",
+      "content": "Image overlay"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color_start",
+      "label": "Overlay start color",
+      "default": "#ee0c74"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity_start",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Overlay start opacity",
+      "default": 50
+    },
+    {
+      "type": "color",
+      "id": "overlay_color_end",
+      "label": "Overlay end color",
+      "default": "#fe6802"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity_end",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Overlay end opacity",
+      "default": 0
+    },
+    {
+        "type": "header",
+        "content": "t:blocks.text.settings.padding_header.content"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "t:blocks.text.settings.padding_top.label",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "t:blocks.text.settings.padding_bottom.label",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "t:blocks.text.settings.padding_top_mobile.label",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "label": "t:blocks.text.settings.padding_bottom_mobile.label",
+        "default": 0
+      }
+  ],
+  "presets": [
+    {
+      "name": "Listicle items"
+    }
+  ]
+}
+{% endschema %}

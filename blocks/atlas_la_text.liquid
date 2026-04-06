@@ -1,0 +1,261 @@
+{% style %}
+.block-{{ block.id }} {
+  margin-top: {{block.settings.padding_top }}px;
+  margin-bottom: {{block.settings.padding_bottom }}px;
+  font-size: {{block.settings.font_size }}px;
+  line-height: calc( 100% + 8px);
+  color: {{block.settings.text_color }};
+  padding-left: {{block.settings.padding_left }}px;
+  padding-right: {{block.settings.padding_right }}px;
+  {% if block.settings.text_alignment_mobile != blank %}
+    text-align: {{ block.settings.text_alignment_mobile }};
+  {% endif %}
+}
+.block-{{ block.id }} > * {
+  {% if block.settings.text_has_background_color %}
+    background: rgba({{ block.settings.text_background_color.red }}, {{ block.settings.text_background_color.green }}, {{ block.settings.text_background_color.blue }}, {{ block.settings.text_background_color_opacity | divided_by: 100.0 }}) none repeat scroll 0 0;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    display: inline;
+  {% endif %} 
+
+}
+.block-{{ block.id }} p {
+  margin: 0 !important;
+}
+.block-{{ block.id }} strong {
+  {% if block.settings.text_use_gradient %}
+    background: {% if block.settings.text_gradient_color != blank %}{{ block.settings.text_gradient_color }}{% else %}var(--color-highlighted-color){% endif %};
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  {% else %}
+    color: {{block.settings.highlighted_text_color }};
+  {% endif %}
+  font-weight: 700;
+}
+@media screen and (max-width: 768px) {
+  .block-{{ block.id }} {
+    margin-top: {{block.settings.padding_top_mobile }}px;
+    margin-bottom: {{block.settings.padding_bottom_mobile }}px;
+    font-size: {{block.settings.mobile_font_size }}px;
+    padding-left: {{block.settings.padding_left_mobile }}px;
+    padding-right: {{block.settings.padding_right_mobile }}px;
+  }
+}
+@media screen and (min-width: 769px) {
+  .block-{{ block.id }} {
+    {% if block.settings.text_alignment != blank %}
+      text-align: {{ block.settings.text_alignment }};
+    {% endif %}
+  }
+}
+{% endstyle %}
+<div class="block-{{ block.id }} text-block" {{ block.shopify_attributes }}>
+    {{- block.settings.text -}}
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-product.blocks.text.name",
+  "tag": null,
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "t:sections.main-product.blocks.text.settings.text.label",
+      "default": "<p>Text Block</p>"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Desktop Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "text_alignment_mobile",
+      "label": "Mobile Text alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "t:blocks.text.settings.styling_header.content"
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "min": 8,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.announcement-bar.settings.font_size.label",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "mobile_font_size", 
+      "min": 8,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.announcement-bar.settings.mobile_font_size.label",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:sections.announcement-bar.settings.text_color.label",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "highlighted_text_color",
+      "label": "t:sections.all.common.bolded_text_color.label",
+      "default": "#000000"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_use_gradient",
+      "label": "t:sections.all.common.use_gradient_text.label",
+      "default": false
+    },
+    {
+      "type": "color_background",
+      "id": "text_gradient_color",
+      "label": "t:sections.all.common.text_gradient_color.label",
+      "visible_if": "{{ block.settings.text_use_gradient }}",
+      "default": "linear-gradient(180deg, rgba(251, 51, 166, 1), rgba(127, 72, 176, 1) 50%, rgba(48, 145, 211, 1) 100%)"
+    },
+    {
+      "type": "header",
+      "content": "Text has background color"
+    },
+    {
+      "type": "checkbox",
+      "id": "text_has_background_color",
+      "label": "Text has background color",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "text_background_color",
+      "label": "Text background color",
+      "default": "#D9D9D9",
+      "visible_if": "{{ block.settings.text_has_background_color }}"
+    },
+    {
+      "type": "range",
+      "id": "text_background_color_opacity",
+      "label": "Text background color opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 30,
+      "visible_if": "{{ block.settings.text_has_background_color }}"
+    },
+    {
+      "type": "header",
+      "content": "Horizontal spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop horizontal spacing left",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Desktop horizontal spacing right",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_left_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile horizontal spacing left",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_right_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Mobile horizontal spacing right",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:blocks.text.settings.padding_header.content"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:blocks.text.settings.padding_top.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:blocks.text.settings.padding_bottom.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:blocks.text.settings.padding_top_mobile.label",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "t:blocks.text.settings.padding_bottom_mobile.label",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:blocks.text.presets.name"
+    }
+  ]
+}
+{% endschema %}

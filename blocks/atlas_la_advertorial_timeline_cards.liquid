@@ -1,0 +1,472 @@
+{% style %}
+  .block-{{ block.id }} {
+    padding-top: {{ block.settings.padding_top }}px;
+    padding-bottom: {{ block.settings.padding_bottom }}px;
+    display: flex;
+    flex-direction: column;
+    gap: {{ block.settings.gap_between_cards_mobile }}px;
+    list-style: none;
+    padding-left: 0;
+    margin:0;
+  }
+  .block-{{ block.id }} .advertorial-timeline-cards__item {
+    display: flex;
+    gap: {{ block.settings.gap_between_image_and_content_mobile }}px;
+  }
+  .block-{{ block.id }} .advertorial-timeline-cards__item-image {
+    width: {{ block.settings.image_width }}px;
+    height: {{ block.settings.image_height }}px;
+    object-fit: cover;
+    border-radius: {{ block.settings.image_border_radius }}px;
+  }
+  @media screen and (max-width: 1024px) {
+    .block-{{ block.id }} .advertorial-timeline-cards__item-image {
+      width: {{ block.settings.image_width_mobile }}px;
+      height: {{ block.settings.image_height_mobile }}px;
+    }
+  }
+  .block-{{ block.id }} .advertorial-timeline-cards__item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 22px;
+  }
+  .block-{{ block.id }} .advertorial-timeline-cards__item-badge {
+    display: flex;
+    font-size: {{ block.settings.badge_font_size_mobile }}px;
+    color: {{ block.settings.badge_color_text }};
+    line-height: calc(100% + 12px);
+    background: {{ block.settings.badge_background_color }};
+    border-radius: {{ block.settings.badge_corner_radius }}px;
+    width: fit-content;
+    position: relative;
+    padding-inline: {{ block.settings.badge_padding_inline }}px;
+  }
+  .block-{{ block.id }} .advertorial-timeline-cards__item-badge p {
+    margin: 0;
+  }
+  .block-{{ block.id }} .advertorial-timeline-cards__indicator {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: -{{block.settings.gap_between_image_and_content_mobile}}px;
+    width: {{ block.settings.indicator_size }}px;
+    height: {{ block.settings.indicator_size }}px;
+    background: {{ block.settings.indicator_background_color }};
+    border-radius: 50%;
+    border: {{ block.settings.indicator_border_width }}px solid {{ block.settings.indicator_border_color }};
+    z-index: 1;
+  }
+   .block-{{ block.id }} .advertorial-timeline-cards__item-text {
+        font-size: {{ block.settings.text_font_size_mobile }}px;
+        color: {{ block.settings.text_color }};
+        line-height: calc(100% + 14px);
+   }
+   .block-{{ block.id }} .advertorial-timeline-cards__item-text p {
+    margin: 0;
+   }
+  @media screen and (max-width: 1024px) {
+    .block-{{ block.id }} {
+      padding-top: {{ block.settings.padding_top_mobile }}px;
+      padding-bottom: {{ block.settings.padding_bottom_mobile }}px;
+    }
+  }
+  @media screen and (min-width: 1025px) {
+    .block-{{ block.id }} {
+      gap: {{ block.settings.gap_between_cards }}px;
+    }
+    .block-{{ block.id }} .advertorial-timeline-cards__item {
+      gap: {{ block.settings.gap_between_image_and_content }}px;
+    }
+    .block-{{ block.id }} .advertorial-timeline-cards__indicator {
+      left: -{{block.settings.gap_between_image_and_content}}px;
+    }
+    .block-{{ block.id }} .advertorial-timeline-cards__item-badge {
+      font-size: {{ block.settings.badge_font_size }}px;
+    }
+    .block-{{ block.id }} .advertorial-timeline-cards__item-text {
+      font-size: {{ block.settings.text_font_size }}px;
+    }
+  }
+
+{% endstyle %}
+<ul class="advertorial-timeline-cards block-{{ block.id }}" {{ block.shopify_attributes }}>
+    {% if block.settings.image_1 != blank %}
+        <li class="advertorial-timeline-cards__item">
+            <img class="advertorial-timeline-cards__item-image" src="{{ block.settings.image_1 | image_url: width: 500 }}" width="500" height="500" alt="{{ block.settings.image_1.alt }}">
+            <div class="advertorial-timeline-cards__item-content">
+                <div class="advertorial-timeline-cards__item-badge">
+                    <div class="advertorial-timeline-cards__item-badge-text">{{ block.settings.badge_text_1 }}</div>
+                    <div class="advertorial-timeline-cards__indicator"></div>
+                </div>
+                <div class="advertorial-timeline-cards__item-text">{{ block.settings.text_1 }}</div>
+            </div>
+        </li>
+    {% endif %}
+    {% if block.settings.image_2 != blank %}
+        <li class="advertorial-timeline-cards__item">
+            <img class="advertorial-timeline-cards__item-image" src="{{ block.settings.image_2 | image_url: width: 500 }}" width="500" height="500" alt="{{ block.settings.image_2.alt }}">
+            <div class="advertorial-timeline-cards__item-content">
+                <div class="advertorial-timeline-cards__item-badge">
+                    <div class="advertorial-timeline-cards__item-badge-text">{{ block.settings.badge_text_2 }}</div>
+                    <div class="advertorial-timeline-cards__indicator"></div>
+                </div>
+                <div class="advertorial-timeline-cards__item-text">{{ block.settings.text_2 }}</div>
+            </div>
+        </li>
+    {% endif %}
+    {% if block.settings.image_3 != blank %}
+        <li class="advertorial-timeline-cards__item">
+            <img class="advertorial-timeline-cards__item-image" src="{{ block.settings.image_3 | image_url: width: 500 }}" width="500" height="500" alt="{{ block.settings.image_3.alt }}">
+            <div class="advertorial-timeline-cards__item-content">
+                <div class="advertorial-timeline-cards__item-badge">
+                    <div class="advertorial-timeline-cards__item-badge-text">{{ block.settings.badge_text_3 }}</div>
+                    <div class="advertorial-timeline-cards__indicator"></div>
+                </div>
+                <div class="advertorial-timeline-cards__item-text">{{ block.settings.text_3 }}</div>
+            </div>
+        </li>
+    {% endif %}
+</ul>
+{% schema %}
+{
+  "name": "Timeline cards",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Item 1"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Image 1",
+      "info": "Image for the timeline card 1"
+    },
+    {
+      "type": "richtext",
+      "id": "badge_text_1",
+      "label": "Badge text 1",
+      "default": "<p>Week 1</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text_1",
+      "label": "Text 1",
+      "info": "Text for the timeline card 1",
+      "default": "<p>Experience reduced cravings and increased energy. You may notice less bloating and a slight decrease in water weight.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Item 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Image 2",
+      "info": "Image for the timeline card 2"
+    },
+    {
+      "type": "richtext",
+      "id": "badge_text_2",
+      "label": "Badge text 2",
+      "default": "<p>Week 2</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text_2",
+      "label": "Text 2",
+      "info": "Text for the timeline card 2",
+      "default": "<p>Experience reduced cravings and increased energy. You may notice less bloating and a slight decrease in water weight.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Item 3"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_3",
+      "label": "Image 3",
+      "info": "Image for the timeline card 3"
+    },
+    {
+      "type": "richtext",
+      "id": "badge_text_3",
+      "label": "Badge text 3",
+      "default": "<p>Week 3</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "text_3",
+      "label": "Text 3",
+      "info": "Text for the timeline card 3",
+      "default": "<p>Experience reduced cravings and increased energy. You may notice less bloating and a slight decrease in water weight.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Layout & spacing"
+    },
+    {
+      "type": "range",
+      "id": "gap_between_cards",
+      "label": "Desktop Gap between cards",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "gap_between_cards_mobile",
+      "label": "Mobile Gap between cards",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "gap_between_image_and_content",
+      "label": "Desktop Gap between image and content",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 23
+    },
+    {
+      "type": "range",
+      "id": "gap_between_image_and_content_mobile",
+      "label": "Mobile Gap between image and content",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 23
+    },
+    {
+      "type": "range",
+      "id": "image_width",
+      "label": "Desktop image width",
+      "min": 50,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 230
+    },
+    {
+      "type": "range",
+      "id": "image_height",
+      "label": "Desktop image height",
+      "min": 50,
+      "max": 500, 
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "image_width_mobile",
+      "label": "Mobile image width",
+      "min": 50,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "image_height_mobile",
+      "label": "Mobile image height",
+      "min": 50,
+      "max": 500,
+      "step": 10,
+      "unit": "px",
+      "default": 150
+    },
+    {
+      "type": "range",
+      "id": "image_border_radius",
+      "label": "Image border radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Badge styling"
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size",
+      "label": "Desktop Badge font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "badge_font_size_mobile",
+      "label": "Mobile Badge font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "badge_color_text",
+      "label": "Badge text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "badge_background_color",
+      "label": "Badge background color",
+      "default": "#3C3C3C"
+    },
+    {
+      "type": "range",
+      "id": "badge_corner_radius",
+      "label": "Badge corner radius",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "badge_padding_inline",
+      "label": "Badge padding inline",
+      "min": 0,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Indicator styling"
+    },
+    {
+      "type": "range",
+      "id": "indicator_size",
+      "label": "Indicator size",
+      "min": 5,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "indicator_background_color",
+      "label": "Indicator background color",
+      "default": "#7EBC4D"
+    },
+    {
+      "type": "range",
+      "id": "indicator_border_width",
+      "label": "Indicator border width",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "default": 3
+    },
+    {
+      "type": "color",
+      "id": "indicator_border_color",
+      "label": "Indicator border color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Text styling"
+    },
+    {
+      "type": "range",
+      "id": "text_font_size",
+      "label": "Desktop Text font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "text_font_size_mobile",
+      "label": "Mobile Text font size",
+      "min": 10,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Section spacing"
+    },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "label": "Desktop padding top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "label": "Desktop padding bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 0
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "label": "Mobile padding top",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 0
+      },  
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "label": "Mobile padding bottom",
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "unit": "px",
+        "default": 0
+      }
+  ],
+  "presets": [
+    {
+      "name": "Timeline cards"
+    }
+  ]
+}
+{% endschema %}

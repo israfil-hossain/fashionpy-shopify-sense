@@ -1,0 +1,321 @@
+{% style %}
+  .block-{{ block.id }} {
+    padding-top: {{ block.settings.padding_top }}px;
+    padding-bottom: {{ block.settings.padding_bottom }}px;
+    display: flex;
+    width: calc(40% - 90px);
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    transition: opacity 0.4s ease;
+  }
+  .block-{{ block.id }} .text-block ,.block-{{ block.id }} .heading-block {
+    text-align: center;
+  }
+  .block-{{ block.id }}.sidebar-transitioning {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .block-{{ block.id }} .advertorial-side-bar__wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+    position: sticky;
+    top: 24px;
+    overflow-y: auto;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox, Safari 18.2+, Chromium 121+ */
+    padding-bottom: 48px;
+  }
+  .block-{{ block.id }} .advertorial-side-bar__wrapper::-webkit-scrollbar {
+    display: none;
+  }
+  @media screen and (max-width: 1024px) {
+    .block-{{ block.id }} .advertorial-side-bar__wrapper {
+      height: fit-content;
+      padding-bottom: 0;
+    }
+  }
+  .advertorial-side-bar-clone {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .advertorial-side-bar-clone.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  @media (max-width: 1024px) {
+    .block-{{ block.id }} {
+      padding-top: {{ block.settings.padding_top_mobile }}px;
+      padding-bottom: {{ block.settings.padding_bottom_mobile }}px;
+      position: relative;
+      width: 100%;
+      height: auto;
+      top: auto;
+      right: auto;
+    }
+    .block-{{ block.id }} .advertorial-side-bar__wrapper{
+    display: none;
+  }
+    .block-{{ block.id }} .advertorial-side-bar__wrapper {
+      position: relative;
+      top: auto;
+    }
+    .advertorial-side-bar-clone {
+      display: none !important;
+    }
+  }
+{% endstyle %}
+<div class="advertorial-side-bar block-{{ block.id }}" data-sidebar-id="{{ block.id }}" data-sidebar-source="true" {{ block.shopify_attributes }}>
+    <div class="advertorial-side-bar__wrapper">
+        {% content_for 'blocks' %}
+    </div>
+</div>
+<script>
+  (function() {
+    // Only run for source sidebars (first section)
+    const sidebar = document.querySelector('[data-sidebar-id="{{ block.id }}"][data-sidebar-source="true"]');
+    if (!sidebar) return;
+
+    // Check if desktop (only run cloning logic on desktop)
+    function isDesktop() {
+      return window.innerWidth > 768;
+    }
+
+    let clone = null;
+    let nextSection = null;
+
+    function findNextAdvertorialSection() {
+      const currentSection = sidebar.closest('.shopify-section');
+      if (!currentSection) return null;
+
+      let next = currentSection.nextElementSibling;
+      while (next) {
+        if (next.querySelector('.advertorial-section')) {
+          return next;
+        }
+        next = next.nextElementSibling;
+      }
+      return null;
+    }
+
+    function createClone() {
+      if (clone) return clone;
+      if (!isDesktop()) return null; // Don't create clone on mobile
+
+      nextSection = findNextAdvertorialSection();
+      if (!nextSection) return null;
+
+      const contentContainer = nextSection.querySelector('.advertorial__content');
+      if (!contentContainer) return null;
+
+      // Create clone with same structure
+      clone = sidebar.cloneNode(true);
+      clone.removeAttribute('data-sidebar-source');
+      clone.classList.add('advertorial-side-bar-clone');
+      clone.setAttribute('data-sidebar-clone', 'true');
+      
+      // Insert clone into next section
+      contentContainer.appendChild(clone);
+      
+      return clone;
+    }
+
+    function syncCloneContent() {
+      if (!clone) return;
+      
+      const originalWrapper = sidebar.querySelector('.advertorial-side-bar__wrapper');
+      const cloneWrapper = clone.querySelector('.advertorial-side-bar__wrapper');
+      
+      if (originalWrapper && cloneWrapper) {
+        cloneWrapper.innerHTML = originalWrapper.innerHTML;
+      }
+    }
+
+    function removeClone() {
+      if (clone) {
+        clone.remove();
+        clone = null;
+      }
+    }
+
+    function handleScroll() {
+      // Only run cloning logic on desktop
+      if (!isDesktop()) {
+        // On mobile, ensure original is always visible and remove clone if exists
+        sidebar.style.opacity = '1';
+        sidebar.style.pointerEvents = 'auto';
+        removeClone();
+        return;
+      }
+
+      // Desktop logic
+      // Get the original section (advertorial.liquid)
+      const originalSection = sidebar.closest('.shopify-section');
+      if (!originalSection) return;
+      
+      const originalSectionRect = originalSection.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      
+      // Check if original section is visible in viewport
+      const originalSectionVisible = originalSectionRect.bottom > 0 && originalSectionRect.top < windowHeight;
+      
+      // Create clone if we haven't yet
+      if (!clone) {
+        createClone();
+        if (clone) {
+          syncCloneContent();
+        }
+      }
+      
+      if (clone) {
+        syncCloneContent(); // Always keep content synced
+        
+        // Simple logic: show original if its section is visible, otherwise show clone
+        if (originalSectionVisible) {
+          // Original section is visible - show original
+          sidebar.style.opacity = '1';
+          sidebar.style.pointerEvents = 'auto';
+          clone.style.opacity = '0';
+          clone.style.pointerEvents = 'none';
+        } else {
+          // Original section is NOT visible - show clone
+          sidebar.style.opacity = '0';
+          sidebar.style.pointerEvents = 'none';
+          clone.style.opacity = '1';
+          clone.style.pointerEvents = 'auto';
+        }
+      }
+    }
+
+    // Throttle scroll events
+    let ticking = false;
+    function onScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+
+    function onResize() {
+      // On resize, check if we switched between mobile/desktop
+      if (!isDesktop()) {
+        // Switched to mobile - remove clone and show original
+        removeClone();
+        sidebar.style.opacity = '1';
+        sidebar.style.pointerEvents = 'auto';
+      } else {
+        // Switched to desktop - initialize
+        handleScroll();
+      }
+    }
+
+    // Initialize on load
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(handleScroll, 100);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onResize);
+      });
+    } else {
+      setTimeout(handleScroll, 100);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onResize);
+    }
+  })();
+</script>
+{% schema %}
+{
+  "name": "Side Bar",
+  "tag": null,
+  "settings": [
+    {
+        "type": "header",
+        "content": "Padding"
+      },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "label": "Desktop padding top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "label": "Desktop padding bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "padding_top_mobile",
+          "label": "Mobile padding top",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        },  
+        {
+          "type": "range",
+          "id": "padding_bottom_mobile",
+          "label": "Mobile padding bottom",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "px",
+          "default": 0
+        }
+  ],
+  "blocks": [
+    {
+        "type": "atlas_la_text",
+    },
+    {
+        "type": "atlas_la_image",
+    },
+    {
+        "type": "atlas_la_heading",
+    },
+    {
+        "type": "atlas_la_advertorial_list_icon_text",
+    },
+    {
+        "type": "atlas_la_advertorial_author",
+    },
+    {
+        "type": "atlas_la_advertorial_timeline_cards",
+    },
+    {
+        "type": "atlas_la_advertorial_review_cards",
+    },
+    {
+        "type": "atlas_la_advertorial_cta_button",
+    },
+    {
+        "type": "atlas_la_advertorial_timer",
+    },
+    {
+        "type": "atlas_la_advertorial_product_card",
+    }
+  ],
+  "presets": [
+    {
+      "name": "Side Bar"
+    }
+  ]
+}
+{% endschema %}
