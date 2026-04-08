@@ -1,1 +1,323 @@
-{"sections":{"image-with-text":{"type":"image-with-text","blocks":{"heading":{"type":"heading","disabled":true,"settings":{"heading":"Browse our latest products","heading_size":"h1"}},"button":{"type":"button","disabled":true,"settings":{"button_label":"Shop now","button_link":"shopify:\/\/collections\/all","button_style_secondary":false}}},"block_order":["heading","button"],"disabled":true,"settings":{"image":"shopify:\/\/shop_images\/in-one-store-user-find-women-products-bags-accessories-make-this-hero-image-for-website.png","height":"large","desktop_image_width":"large","layout":"text_first","image_behavior":"ambient","content_layout":"no-overlap","desktop_content_position":"middle","desktop_content_alignment":"left","mobile_content_alignment":"left","section_color_scheme":"scheme-1","color_scheme":"scheme-5","padding_top":0,"padding_bottom":0}},"image_banner_TQT4Qd":{"type":"image-banner","blocks":{"buttons_VVrw9C":{"type":"buttons","settings":{"button_label_1":"Beauty","button_link_1":"shopify:\/\/collections\/beauty","button_style_secondary_1":false,"button_label_2":"Women Collection","button_link_2":"shopify:\/\/collections\/streetwear","button_style_secondary_2":false}}},"block_order":["buttons_VVrw9C"],"name":"t:sections.image-banner.presets.name","settings":{"image":"shopify:\/\/shop_images\/in-one-store-user-find-women-products-bags-accessories-make-this-hero-image-for-website.png","image_2":"shopify:\/\/shop_images\/slider_-_01.png","image_overlay_opacity":10,"image_height":"small","image_behavior":"none","desktop_content_position":"bottom-center","desktop_content_alignment":"center","show_text_box":false,"color_scheme":"","stack_images_on_mobile":false,"mobile_content_alignment":"center","show_text_below":true}},"collection_list_7atjqJ":{"type":"collection-list","blocks":{"featured_collection_k4aRig":{"type":"featured_collection","settings":{"collection":"streetwear"}},"featured_collection_whtHg9":{"type":"featured_collection","settings":{"collection":"kids"}},"featured_collection_frcWGh":{"type":"featured_collection","settings":{"collection":"bags"}},"featured_collection_C79z6g":{"type":"featured_collection","settings":{"collection":"beauty"}},"featured_collection_4PGzGU":{"type":"featured_collection","settings":{"collection":"accessories"}}},"block_order":["featured_collection_k4aRig","featured_collection_whtHg9","featured_collection_frcWGh","featured_collection_C79z6g","featured_collection_4PGzGU"],"name":"t:sections.collection-list.presets.name","settings":{"title":"","heading_size":"h2","image_ratio":"portrait","columns_desktop":6,"color_scheme":"scheme-1","show_view_all":false,"columns_mobile":"2","swipe_on_mobile":false,"padding_top":16,"padding_bottom":0}},"177451621164ab1666":{"type":"_blocks","blocks":{"ai_gen_block_e3a6356_fDHriB":{"type":"ai_gen_block_e3a6356","settings":{"collection":"new-arrivals","products_to_show":56,"heading":"For You","heading_alignment":"center","heading_size":36,"heading_spacing":40,"heading_color":"#2e2a39","columns_desktop":4,"columns_tablet":3,"columns_mobile":"2","grid_gap":30,"container_width":1200,"show_vendor":true,"show_price":true,"show_rating":true,"show_video":true,"show_discount_badge":true,"show_add_to_cart":false,"add_to_cart_text":"Add to cart","sold_out_text":"Sold out","product_title_size":14,"product_title_color":"#2e2a39","price_size":16,"price_color":"#2e2a39","sale_price_color":"#d82c0d","star_color":"#ffc107","card_padding":16,"card_border_radius":12,"card_background":"#ffffff","badge_font_size":12,"badge_border_radius":4,"badge_background":"#d82c0d","badge_text_color":"#ffffff","button_font_size":14,"button_border_radius":8,"button_background":"#2e2a39","button_hover_background":"#9b046f","button_text_color":"#ffffff","section_padding_top":50,"section_padding_bottom":50,"background_color":"#fdfbf7"},"blocks":{}}},"block_order":["ai_gen_block_e3a6356_fDHriB"],"settings":{}},"featured_product_GD4jdH":{"type":"featured-product","blocks":{"text_RzML9q":{"type":"text","settings":{"text":"{{ section.settings.product.vendor }}","text_style":"uppercase"}},"title_jpfJGf":{"type":"title","settings":{"heading_size":"h1"}},"price_Twq6Hk":{"type":"price","settings":{}},"variant_picker_74N8fj":{"type":"variant_picker","settings":{"picker_type":"button","swatch_shape":"circle"}},"quantity_selector_NkMwp9":{"type":"quantity_selector","settings":{}},"buy_buttons_4CUcb6":{"type":"buy_buttons","settings":{"show_dynamic_checkout":false,"show_gift_card_recipient":true}},"share_YkpXPE":{"type":"share","settings":{"share_label":"Share"}}},"block_order":["text_RzML9q","title_jpfJGf","price_Twq6Hk","variant_picker_74N8fj","quantity_selector_NkMwp9","buy_buttons_4CUcb6","share_YkpXPE"],"name":"t:sections.featured-product.presets.name","settings":{"product":"waterproof-gym-fitness-bag-outdoor-travel-sport-excerise-fashion-casual-backpack","color_scheme":"","secondary_background":false,"media_size":"medium","constrain_to_viewport":true,"media_fit":"contain","media_position":"left","image_zoom":"lightbox","hide_variants":false,"enable_video_looping":false,"padding_top":36,"padding_bottom":36}},"featured_blog_ACWrUi":{"type":"featured-blog","name":"t:sections.featured-blog.presets.name","settings":{"blog":"news","post_limit":4,"heading":"Blog posts","heading_size":"h1","columns_desktop":3,"show_view_all":true,"show_image":true,"show_date":true,"show_author":false,"color_scheme":"","padding_top":36,"padding_bottom":36}},"177467771733876fe9":{"type":"_blocks","settings":{}},"1774678298d334198c":{"type":"_blocks","settings":{}},"1774678545eddde733":{"type":"_blocks","settings":{}},"177469809648e5bcb4":{"type":"apps","settings":{"include_margins":true}},"17747436843bd9c33b":{"type":"_blocks","settings":{}}},"order":["image-with-text","image_banner_TQT4Qd","collection_list_7atjqJ","177451621164ab1666","featured_product_GD4jdH","featured_blog_ACWrUi","177467771733876fe9","1774678298d334198c","1774678545eddde733","177469809648e5bcb4","17747436843bd9c33b"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "image-with-text": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "Browse our latest products",
+            "heading_size": "h1"
+          }
+        },
+        "button": {
+          "type": "button",
+          "disabled": true,
+          "settings": {
+            "button_label": "Shop now",
+            "button_link": "shopify://collections/all",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "button"
+      ],
+      "disabled": true,
+      "settings": {
+        "image": "shopify://shop_images/in-one-store-user-find-women-products-bags-accessories-make-this-hero-image-for-website.png",
+        "height": "large",
+        "desktop_image_width": "large",
+        "layout": "text_first",
+        "image_behavior": "ambient",
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "scheme-1",
+        "color_scheme": "scheme-5",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "image_banner_TQT4Qd": {
+      "type": "image-banner",
+      "blocks": {
+        "buttons_VVrw9C": {
+          "type": "buttons",
+          "settings": {
+            "button_label_1": "Beauty",
+            "button_link_1": "shopify://collections/beauty",
+            "button_style_secondary_1": false,
+            "button_label_2": "Women Collection",
+            "button_link_2": "shopify://collections/streetwear",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "buttons_VVrw9C"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/in-one-store-user-find-women-products-bags-accessories-make-this-hero-image-for-website.png",
+        "image_2": "shopify://shop_images/slider_-_01.png",
+        "image_overlay_opacity": 10,
+        "image_height": "small",
+        "image_behavior": "none",
+        "desktop_content_position": "bottom-center",
+        "desktop_content_alignment": "center",
+        "show_text_box": false,
+        "color_scheme": "",
+        "stack_images_on_mobile": false,
+        "mobile_content_alignment": "center",
+        "show_text_below": true
+      }
+    },
+    "collection_list_7atjqJ": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_k4aRig": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "streetwear"
+          }
+        },
+        "featured_collection_whtHg9": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "kids"
+          }
+        },
+        "featured_collection_frcWGh": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "bags"
+          }
+        },
+        "featured_collection_C79z6g": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "beauty"
+          }
+        },
+        "featured_collection_4PGzGU": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "accessories"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_k4aRig",
+        "featured_collection_whtHg9",
+        "featured_collection_frcWGh",
+        "featured_collection_C79z6g",
+        "featured_collection_4PGzGU"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "",
+        "heading_size": "h2",
+        "image_ratio": "portrait",
+        "columns_desktop": 5,
+        "color_scheme": "scheme-1",
+        "show_view_all": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 16,
+        "padding_bottom": 0
+      }
+    },
+    "177451621164ab1666": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_e3a6356_fDHriB": {
+          "type": "ai_gen_block_e3a6356",
+          "settings": {
+            "collection": "new-arrivals",
+            "products_to_show": 56,
+            "heading": "For You",
+            "heading_alignment": "center",
+            "heading_size": 36,
+            "heading_spacing": 40,
+            "heading_color": "#2e2a39",
+            "columns_desktop": 4,
+            "columns_tablet": 3,
+            "columns_mobile": "2",
+            "grid_gap": 30,
+            "container_width": 1200,
+            "show_vendor": true,
+            "show_price": true,
+            "show_rating": true,
+            "show_video": true,
+            "show_discount_badge": true,
+            "show_add_to_cart": false,
+            "add_to_cart_text": "Add to cart",
+            "sold_out_text": "Sold out",
+            "product_title_size": 14,
+            "product_title_color": "#2e2a39",
+            "price_size": 16,
+            "price_color": "#2e2a39",
+            "sale_price_color": "#d82c0d",
+            "star_color": "#ffc107",
+            "card_padding": 16,
+            "card_border_radius": 12,
+            "card_background": "#ffffff",
+            "badge_font_size": 12,
+            "badge_border_radius": 4,
+            "badge_background": "#d82c0d",
+            "badge_text_color": "#ffffff",
+            "button_font_size": 14,
+            "button_border_radius": 8,
+            "button_background": "#2e2a39",
+            "button_hover_background": "#9b046f",
+            "button_text_color": "#ffffff",
+            "section_padding_top": 50,
+            "section_padding_bottom": 50,
+            "background_color": "#fdfbf7"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_e3a6356_fDHriB"
+      ],
+      "settings": {}
+    },
+    "featured_product_GD4jdH": {
+      "type": "featured-product",
+      "blocks": {
+        "text_RzML9q": {
+          "type": "text",
+          "settings": {
+            "text": "{{ section.settings.product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title_jpfJGf": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h1"
+          }
+        },
+        "price_Twq6Hk": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker_74N8fj": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector_NkMwp9": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons_4CUcb6": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": false,
+            "show_gift_card_recipient": true
+          }
+        },
+        "share_YkpXPE": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "text_RzML9q",
+        "title_jpfJGf",
+        "price_Twq6Hk",
+        "variant_picker_74N8fj",
+        "quantity_selector_NkMwp9",
+        "buy_buttons_4CUcb6",
+        "share_YkpXPE"
+      ],
+      "name": "t:sections.featured-product.presets.name",
+      "settings": {
+        "product": "waterproof-gym-fitness-bag-outdoor-travel-sport-excerise-fashion-casual-backpack",
+        "color_scheme": "",
+        "secondary_background": false,
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "featured_blog_ACWrUi": {
+      "type": "featured-blog",
+      "name": "t:sections.featured-blog.presets.name",
+      "settings": {
+        "blog": "news",
+        "post_limit": 4,
+        "heading": "Blog posts",
+        "heading_size": "h1",
+        "columns_desktop": 3,
+        "show_view_all": true,
+        "show_image": true,
+        "show_date": true,
+        "show_author": false,
+        "color_scheme": "",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "177467771733876fe9": {
+      "type": "_blocks",
+      "settings": {}
+    },
+    "1774678298d334198c": {
+      "type": "_blocks",
+      "settings": {}
+    },
+    "1774678545eddde733": {
+      "type": "_blocks",
+      "settings": {}
+    },
+    "177469809648e5bcb4": {
+      "type": "apps",
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "17747436843bd9c33b": {
+      "type": "_blocks",
+      "settings": {}
+    }
+  },
+  "order": [
+    "image-with-text",
+    "image_banner_TQT4Qd",
+    "collection_list_7atjqJ",
+    "177451621164ab1666",
+    "featured_product_GD4jdH",
+    "featured_blog_ACWrUi",
+    "177467771733876fe9",
+    "1774678298d334198c",
+    "1774678545eddde733",
+    "177469809648e5bcb4",
+    "17747436843bd9c33b"
+  ]
+}
