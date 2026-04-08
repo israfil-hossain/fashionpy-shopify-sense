@@ -130,12 +130,12 @@
       "settings": {
         "title": "",
         "heading_size": "h2",
-        "image_ratio": "portrait",
+        "image_ratio": "square",
         "columns_desktop": 5,
         "color_scheme": "scheme-1",
         "show_view_all": false,
         "columns_mobile": "2",
-        "swipe_on_mobile": false,
+        "swipe_on_mobile": true,
         "padding_top": 16,
         "padding_bottom": 0
       }
@@ -252,7 +252,7 @@
       ],
       "name": "t:sections.featured-product.presets.name",
       "settings": {
-        "product": "waterproof-gym-fitness-bag-outdoor-travel-sport-excerise-fashion-casual-backpack",
+        "product": "portable-automatic-hair-curler-pro",
         "color_scheme": "",
         "secondary_background": false,
         "media_size": "medium",
@@ -268,43 +268,22 @@
     },
     "featured_blog_ACWrUi": {
       "type": "featured-blog",
+      "custom_css": [],
       "name": "t:sections.featured-blog.presets.name",
       "settings": {
         "blog": "news",
         "post_limit": 4,
         "heading": "Blog posts",
-        "heading_size": "h1",
-        "columns_desktop": 3,
+        "heading_size": "h2",
+        "columns_desktop": 4,
         "show_view_all": true,
         "show_image": true,
-        "show_date": true,
+        "show_date": false,
         "show_author": false,
         "color_scheme": "",
         "padding_top": 36,
         "padding_bottom": 36
       }
-    },
-    "177467771733876fe9": {
-      "type": "_blocks",
-      "settings": {}
-    },
-    "1774678298d334198c": {
-      "type": "_blocks",
-      "settings": {}
-    },
-    "1774678545eddde733": {
-      "type": "_blocks",
-      "settings": {}
-    },
-    "177469809648e5bcb4": {
-      "type": "apps",
-      "settings": {
-        "include_margins": true
-      }
-    },
-    "17747436843bd9c33b": {
-      "type": "_blocks",
-      "settings": {}
     }
   },
   "order": [
@@ -313,11 +292,6 @@
     "collection_list_7atjqJ",
     "177451621164ab1666",
     "featured_product_GD4jdH",
-    "featured_blog_ACWrUi",
-    "177467771733876fe9",
-    "1774678298d334198c",
-    "1774678545eddde733",
-    "177469809648e5bcb4",
-    "17747436843bd9c33b"
+    "featured_blog_ACWrUi"
   ]
 }
